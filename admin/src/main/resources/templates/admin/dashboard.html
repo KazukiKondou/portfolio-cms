@@ -11,17 +11,7 @@
 
 <body>
 
-  <header class="site-header">
-    <div class="container">
-      <a href="/admin" class="site-name">Admin</a>
-      <nav class="site-nav">
-        <a href="/" target="_blank" rel="noopener">サイトを見る ↗</a>
-        <form method="post" th:action="@{/admin/logout}" class="logout-form">
-          <button type="submit" class="btn-link">ログアウト</button>
-        </form>
-      </nav>
-    </div>
-  </header>
+  <header th:replace="~{fragments/admin :: header}"></header>
 
   <main>
     <section class="admin-dashboard">
@@ -31,7 +21,7 @@
 
         <h2 class="section-title">編集メニュー</h2>
         <ul class="admin-menu">
-          <li>サイト設定（文言） <em>準備中</em></li>
+          <li><a href="/admin/settings">サイト設定（文言）</a></li>
           <li>作品一覧 <em>準備中</em></li>
           <li>スキル <em>準備中</em></li>
         </ul>
