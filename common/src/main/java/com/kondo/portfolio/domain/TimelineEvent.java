@@ -7,6 +7,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * About ページの略歴 (高校卒業、大学入学、インターン等)
@@ -33,6 +35,10 @@ public class TimelineEvent {
     @Column(columnDefinition = "TEXT")
     private String description;
 
+    /** " · " 区切りのタグ。例: "Java · Spring Boot" */
+    @Column(length = 300)
+    private String tags;
+
     @Column(name = "sort_order", nullable = false)
     private Integer sortOrder;
 
@@ -55,6 +61,8 @@ public class TimelineEvent {
     public void setTitle(String title) { this.title = title; }
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
+    public String getTags() { return tags; }
+    public void setTags(String tags) { this.tags = tags; }
     public Integer getSortOrder() { return sortOrder; }
     public void setSortOrder(Integer sortOrder) { this.sortOrder = sortOrder; }
     public Boolean getPublished() { return published; }
@@ -69,5 +77,14 @@ public class TimelineEvent {
         if (year == null) return "";
         if (month == null) return year + "年";
         return year + "年" + month + "月";
+    }
+
+    /** タグを " · " で分割した List で返す。テンプレートで th:each に使う */
+    public List<String> getTagList() {
+        if (tags == null || tags.isBlank()) return List.of();
+        return Arrays.stream(tags.split(" · "))
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .toList();
     }
 }

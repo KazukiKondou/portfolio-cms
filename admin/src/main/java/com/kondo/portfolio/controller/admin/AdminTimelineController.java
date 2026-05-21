@@ -67,6 +67,7 @@ public class AdminTimelineController {
             existing.setMonth(event.getMonth());
             existing.setTitle(event.getTitle());
             existing.setDescription(event.getDescription());
+            existing.setTags(event.getTags());
             existing.setSortOrder(event.getSortOrder() == null ? 0 : event.getSortOrder());
             existing.setPublished(event.getPublished() != null && event.getPublished());
             service.save(existing);

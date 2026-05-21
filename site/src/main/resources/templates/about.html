@@ -33,6 +33,11 @@
               <p class="timeline-description"
                  th:if="${!#strings.isEmpty(ev.description)}"
                  th:text="${ev.description}">説明</p>
+              <div class="timeline-tags" th:if="${!ev.tagList.empty}">
+                <span class="timeline-tag"
+                      th:each="tag : ${ev.tagList}"
+                      th:text="${tag}">Java</span>
+              </div>
             </div>
           </li>
         </ol>

@@ -46,6 +46,11 @@
           </div>
 
           <div class="form-row">
+            <label for="tags"><span class="form-label">タグ（任意）</span><span class="form-key">" · " 区切り、例: Java · Spring Boot</span></label>
+            <input type="text" id="tags" th:field="*{tags}">
+          </div>
+
+          <div class="form-row">
             <label for="sortOrder"><span class="form-label">表示順</span><span class="form-key">同じ年月内での並び順、小さいほど上</span></label>
             <input type="number" id="sortOrder" th:field="*{sortOrder}">
           </div>
