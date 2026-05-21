@@ -32,3 +32,9 @@ spring:
 
 server:
   port: 8080
+
+# 管理画面のログイン情報。本番では環境変数で必ず上書きする
+app:
+  admin:
+    username: ${ADMIN_USERNAME:admin}
+    password: ${ADMIN_PASSWORD:admin}

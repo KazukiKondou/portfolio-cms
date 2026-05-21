@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ダッシュボード — Admin</title>
+  <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="/admin" class="site-name">Admin</a>
+      <nav class="site-nav">
+        <a href="/" target="_blank" rel="noopener">サイトを見る ↗</a>
+        <form method="post" th:action="@{/admin/logout}" class="logout-form">
+          <button type="submit" class="btn-link">ログアウト</button>
+        </form>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="admin-dashboard">
+      <div class="container">
+        <h1 class="page-title">ダッシュボード</h1>
+        <p class="welcome">こんにちは、<span sec:authentication="name">admin</span> さん。</p>
+
+        <h2 class="section-title">編集メニュー</h2>
+        <ul class="admin-menu">
+          <li>サイト設定（文言） <em>準備中</em></li>
+          <li>作品一覧 <em>準備中</em></li>
+          <li>スキル <em>準備中</em></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+</body>
+
+</html>
