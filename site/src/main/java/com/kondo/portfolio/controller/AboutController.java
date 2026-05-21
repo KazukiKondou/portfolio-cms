@@ -1,6 +1,7 @@
 package com.kondo.portfolio.controller;
 
 import com.kondo.portfolio.service.SkillService;
+import com.kondo.portfolio.service.TimelineEventService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,9 +18,11 @@ import java.util.Map;
 public class AboutController {
 
     private final SkillService skillService;
+    private final TimelineEventService timelineService;
 
-    public AboutController(SkillService skillService) {
+    public AboutController(SkillService skillService, TimelineEventService timelineService) {
         this.skillService = skillService;
+        this.timelineService = timelineService;
     }
 
     @GetMapping("/about")
@@ -27,6 +30,7 @@ public class AboutController {
         String bio = settings.getOrDefault("about.bio", "");
         model.addAttribute("aboutBioParagraphs", splitParagraphs(bio));
         model.addAttribute("proficiencyGroups", skillService.findGroupedByProficiency());
+        model.addAttribute("timelineEvents", timelineService.findPublished());
         return "about";
     }
 

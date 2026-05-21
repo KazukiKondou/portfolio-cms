@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title th:text="${isNew} ? 'Timeline 新規作成 — Admin' : 'Timeline 編集 — Admin'">Timeline — Admin</title>
+  <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+
+<body>
+
+  <header th:replace="~{fragments/admin :: header}"></header>
+
+  <main>
+    <section class="admin-edit">
+      <div class="container">
+        <div class="breadcrumb">
+          <a href="/admin/timeline">← Timeline 一覧</a>
+        </div>
+
+        <h1 class="page-title" th:text="${isNew} ? '新規作成' : '編集'">編集</h1>
+
+        <form method="post"
+              th:action="${isNew} ? @{/admin/timeline} : @{|/admin/timeline/${event.id}|}"
+              th:object="${event}" class="edit-form">
+
+          <div class="form-row">
+            <label for="year"><span class="form-label">年</span><span class="form-key">例: 2018</span></label>
+            <input type="number" id="year" th:field="*{year}" min="1900" max="2100" required>
+          </div>
+
+          <div class="form-row">
+            <label for="month"><span class="form-label">月（任意）</span><span class="form-key">1〜12、不明なら空欄</span></label>
+            <input type="number" id="month" th:field="*{month}" min="1" max="12">
+          </div>
+
+          <div class="form-row">
+            <label for="title"><span class="form-label">タイトル</span><span class="form-key">例: 大学入学</span></label>
+            <input type="text" id="title" th:field="*{title}" required>
+          </div>
+
+          <div class="form-row">
+            <label for="description"><span class="form-label">説明（任意）</span></label>
+            <textarea id="description" th:field="*{description}" rows="3"></textarea>
+          </div>
+
+          <div class="form-row">
+            <label for="sortOrder"><span class="form-label">表示順</span><span class="form-key">同じ年月内での並び順、小さいほど上</span></label>
+            <input type="number" id="sortOrder" th:field="*{sortOrder}">
+          </div>
+
+          <div class="form-row">
+            <label>
+              <input type="checkbox" th:field="*{published}">
+              <span class="form-label">公開する</span>
+            </label>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn-primary">保存</button>
+            <a href="/admin/timeline" class="btn-cancel">キャンセル</a>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+</body>
+
+</html>

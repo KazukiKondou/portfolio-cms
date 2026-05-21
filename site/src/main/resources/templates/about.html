@@ -23,6 +23,20 @@
           </p>
         </div>
 
+        <h2 class="section-title">Timeline</h2>
+        <ol class="timeline-list">
+          <li class="timeline-item" th:each="ev : ${timelineEvents}">
+            <span class="timeline-marker"></span>
+            <div class="timeline-content">
+              <span class="timeline-date" th:text="${ev.dateLabel}">2018年4月</span>
+              <h3 class="timeline-title" th:text="${ev.title}">大学入学</h3>
+              <p class="timeline-description"
+                 th:if="${!#strings.isEmpty(ev.description)}"
+                 th:text="${ev.description}">説明</p>
+            </div>
+          </li>
+        </ol>
+
         <h2 class="section-title">Skills</h2>
         <div class="proficiency-groups">
           <div class="proficiency-group" th:each="group : ${proficiencyGroups}">
