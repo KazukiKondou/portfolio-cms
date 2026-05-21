@@ -1,0 +1,26 @@
+# 管理画面 (:admin) 用イメージ
+# ビルドステージ
+FROM gradle:8.14.4-jdk21 AS build
+WORKDIR /workspace
+
+COPY settings.gradle build.gradle ./
+COPY common/build.gradle common/
+COPY site/build.gradle site/
+COPY admin/build.gradle admin/
+RUN gradle :admin:dependencies --no-daemon || true
+
+COPY common common
+COPY admin admin
+# site も settings.gradle で参照されるので空ディレクトリだけ用意する
+RUN mkdir -p site
+
+RUN gradle :admin:bootJar --no-daemon -x test
+
+# 実行ステージ
+FROM eclipse-temurin:21-jre
+WORKDIR /app
+COPY --from=build /workspace/admin/build/libs/*-SNAPSHOT.jar app.jar
+
+EXPOSE 8081
+ENV SPRING_PROFILES_ACTIVE=prod
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]

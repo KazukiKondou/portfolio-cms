@@ -1,0 +1,35 @@
+spring:
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USER}
+    password: ${DATABASE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+  h2:
+    console:
+      enabled: false
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  # admin は migration を走らせず、site 側が反映済みのスキーマを使う想定
+  # 両方 enabled にしても Flyway の lock で安全だが、起動順依存を減らすため admin は validate
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    validate-on-migrate: true
+
+  thymeleaf:
+    cache: true
+
+server:
+  port: 8081
+
+app:
+  admin:
+    username: ${ADMIN_USERNAME}
+    password: ${ADMIN_PASSWORD}
