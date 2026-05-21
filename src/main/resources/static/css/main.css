@@ -1,0 +1,97 @@
+/* リセット（最低限） */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+html, body, h1, h2, h3, h4, p, ul, ol, figure {
+  margin: 0;
+  padding: 0;
+}
+
+/* ベース */
+html {
+  font-size: 16px;
+}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue",
+               "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo",
+               system-ui, sans-serif;
+  font-weight: 400;
+  line-height: 1.7;
+  color: #111;
+  background: #fff;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* レイアウト */
+.container {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ヘッダー */
+.site-header {
+  padding: 28px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+.site-header .container {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.site-name {
+  font-family: "Iowan Old Style", "Hoefler Text", Georgia, serif;
+  font-size: 18px;
+  color: #111;
+  text-decoration: none;
+  letter-spacing: 0.01em;
+}
+.site-nav a {
+  margin-left: 24px;
+  color: #555;
+  text-decoration: none;
+  font-size: 14px;
+}
+.site-nav a:hover {
+  color: #111;
+}
+
+/* ヒーロー */
+.hero {
+  padding: 96px 0 64px;
+}
+.hero h1 {
+  font-family: "Iowan Old Style", "Hoefler Text", Georgia, serif;
+  font-size: 56px;
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  color: #111;
+}
+.hero .lead {
+  margin-top: 12px;
+  font-size: 17px;
+  color: #555;
+}
+.hero .intro {
+  margin-top: 32px;
+  font-size: 16px;
+  color: #333;
+  max-width: 56ch;
+}
+
+/* フッター */
+.site-footer {
+  margin-top: 120px;
+  padding: 32px 0;
+  border-top: 1px solid #f0f0f0;
+  color: #999;
+  font-size: 13px;
+}
+
+/* レスポンシブ */
+@media (max-width: 600px) {
+  .hero { padding: 56px 0 40px; }
+  .hero h1 { font-size: 40px; }
+  .site-nav a { margin-left: 16px; font-size: 13px; }
+}

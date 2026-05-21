@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: portfolio-cms
+
+  # 開発時は H2 のインメモリで動かす。本番では PostgreSQL に切り替える
+  datasource:
+    url: jdbc:h2:mem:portfolio;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  jpa:
+    hibernate:
+      # スキーマは Flyway で管理するので、ここでは作らない
+      ddl-auto: none
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+
+  # 機能1の時点ではマイグレーション無し。機能2 で有効化する
+  flyway:
+    enabled: false
+
+  thymeleaf:
+    cache: false  # 開発中はキャッシュOFF
+
+server:
+  port: 8080
