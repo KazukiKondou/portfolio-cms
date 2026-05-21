@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+  <header th:fragment="header" class="site-header">
+    <div class="container">
+      <a href="/" class="site-name" th:text="${settings['site.title']}">Kondo</a>
+      <nav class="site-nav">
+        <a href="/" th:text="${settings['nav.home']}">Home</a>
+        <a href="/works" th:text="${settings['nav.works']}">Works</a>
+        <a href="/about" th:text="${settings['nav.about']}">About</a>
+        <a href="/contact" th:text="${settings['nav.contact']}">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <footer th:fragment="footer" class="site-footer">
+    <div class="container">
+      <p th:text="${settings['footer.copyright']}">&copy; 2026 Kondo</p>
+    </div>
+  </footer>
+
+</body>
+
+</html>

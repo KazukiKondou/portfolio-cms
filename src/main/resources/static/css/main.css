@@ -124,18 +124,23 @@ a:hover {
   font-size: 16px;
   color: #333;
   max-width: 56ch;
+  margin-bottom: 96px;  /* home はこれ1セクションだけなのでフッターとの間に余白 */
 }
 
-/* Works セクション */
-.works {
-  padding: 24px 0 80px;
-}
-.works h2 {
+/* 下層ページの見出し */
+.page-title {
   font-family: "Iowan Old Style", "Hoefler Text", Georgia, serif;
-  font-size: 28px;
+  font-size: 40px;
   font-weight: 400;
-  letter-spacing: 0.01em;
-  margin-bottom: 24px;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+  margin-bottom: 32px;
+}
+
+/* Works ページ */
+.works {
+  padding: 72px 0 96px;
 }
 .works-list {
   list-style: none;
