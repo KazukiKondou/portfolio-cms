@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 
 /**
- * スキル（カテゴリ + 名前）
+ * スキル（名前 + 習熟度）
  */
 @Entity
 @Table(name = "skills")
@@ -19,11 +19,12 @@ public class Skill {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 50)
-    private String category;
-
     @Column(nullable = false, length = 100)
     private String name;
+
+    /** 1 = 主力 / 2 = よく使う / 3 = 触ったことある */
+    @Column(nullable = false)
+    private Integer proficiency;
 
     @Column(name = "sort_order", nullable = false)
     private Integer sortOrder;
@@ -45,20 +46,20 @@ public class Skill {
         this.id = id;
     }
 
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getProficiency() {
+        return proficiency;
+    }
+
+    public void setProficiency(Integer proficiency) {
+        this.proficiency = proficiency;
     }
 
     public Integer getSortOrder() {

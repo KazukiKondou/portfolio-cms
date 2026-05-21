@@ -24,10 +24,13 @@
         </div>
 
         <h2 class="section-title">Skills</h2>
-        <div class="skill-groups">
-          <div class="skill-group" th:each="entry : ${skillGroups}">
-            <h3 class="skill-category" th:text="${entry.key}">Languages</h3>
-            <p class="skill-list" th:text="${entry.value}">Java · TypeScript · Python · Go</p>
+        <div class="proficiency-groups">
+          <div class="proficiency-group" th:each="group : ${proficiencyGroups}">
+            <div class="proficiency-header">
+              <span class="dots" th:text="${group.dotsString()}">●●●</span>
+              <span class="proficiency-label" th:text="${group.label}">主力</span>
+            </div>
+            <p class="skill-list" th:text="${group.skillsJoined}">Java · Spring Boot · TypeScript</p>
           </div>
         </div>
       </div>

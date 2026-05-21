@@ -26,7 +26,7 @@ public class AboutController {
     public String index(@ModelAttribute("settings") Map<String, String> settings, Model model) {
         String bio = settings.getOrDefault("about.bio", "");
         model.addAttribute("aboutBioParagraphs", splitParagraphs(bio));
-        model.addAttribute("skillGroups", skillService.findGroupedByCategoryAsString());
+        model.addAttribute("proficiencyGroups", skillService.findGroupedByProficiency());
         return "about";
     }
 
