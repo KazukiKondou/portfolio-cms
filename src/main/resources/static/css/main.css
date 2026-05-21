@@ -126,9 +126,58 @@ a:hover {
   max-width: 56ch;
 }
 
+/* Works セクション */
+.works {
+  padding: 24px 0 80px;
+}
+.works h2 {
+  font-family: "Iowan Old Style", "Hoefler Text", Georgia, serif;
+  font-size: 28px;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  margin-bottom: 24px;
+}
+.works-list {
+  list-style: none;
+}
+.works-item {
+  padding: 24px 0;
+  border-top: 1px solid var(--color-border);
+}
+.works-item:last-child {
+  border-bottom: 1px solid var(--color-border);
+}
+.works-link {
+  font-family: "Iowan Old Style", "Hoefler Text", Georgia, serif;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--color-text);
+}
+.works-link:hover {
+  color: var(--color-text);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+.works-link::after {
+  content: " ↗";
+  font-size: 14px;
+  color: var(--color-text-faint);
+  vertical-align: 2px;
+}
+.works-tags {
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--color-text-faint);
+}
+.works-summary {
+  margin-top: 8px;
+  color: var(--color-text-muted);
+  font-size: 15px;
+}
+
 /* フッター（藍色） */
 .site-footer {
-  margin-top: 120px;
   padding: 28px 0;
   background: var(--color-accent);
   color: rgba(255, 255, 255, 0.65);

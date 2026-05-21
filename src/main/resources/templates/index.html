@@ -1,43 +1,59 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title th:text="|${settings['site.title']} — Portfolio|">Kondo — Portfolio</title>
   <link rel="stylesheet" th:href="@{/css/main.css}">
 </head>
+
 <body>
 
-<header class="site-header">
-  <div class="container">
-    <a href="/" class="site-name" th:text="${settings['site.title']}">Kondo</a>
-    <nav class="site-nav">
-      <a href="/"        th:text="${settings['nav.home']}">Home</a>
-      <a href="/works"   th:text="${settings['nav.works']}">Works</a>
-      <a href="/about"   th:text="${settings['nav.about']}">About</a>
-      <a href="/contact" th:text="${settings['nav.contact']}">Contact</a>
-    </nav>
-  </div>
-</header>
-
-<main>
-  <section class="hero">
+  <header class="site-header">
     <div class="container">
-      <h1><span th:text="${settings['site.title']}">Kondo</span><span class="accent-dot">.</span></h1>
-      <p class="lead" th:text="${settings['hero.tagline']}">Software Engineer / 千葉</p>
-      <p class="intro" th:text="${settings['hero.intro']}">
-        Web を中心にバックエンド〜インフラまで触っているエンジニアです。
-        最近は Spring Boot と TypeScript を使うことが多いです。
-      </p>
+      <a href="/" class="site-name" th:text="${settings['site.title']}">Kondo</a>
+      <nav class="site-nav">
+        <a href="/" th:text="${settings['nav.home']}">Home</a>
+        <a href="/works" th:text="${settings['nav.works']}">Works</a>
+        <a href="/about" th:text="${settings['nav.about']}">About</a>
+        <a href="/contact" th:text="${settings['nav.contact']}">Contact</a>
+      </nav>
     </div>
-  </section>
-</main>
+  </header>
 
-<footer class="site-footer">
-  <div class="container">
-    <p th:text="${settings['footer.copyright']}">&copy; 2026 Kondo</p>
-  </div>
-</footer>
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1><span th:text="${settings['site.title']}">Kondo</span><span class="accent-dot">.</span></h1>
+        <p class="lead" th:text="${settings['hero.tagline']}">Software Engineer / 静岡</p>
+        <p class="intro" th:text="${settings['hero.intro']}">
+          Web を中心にバックエンド〜インフラまで触っているエンジニアです。
+          最近は Spring Boot と TypeScript を使うことが多いです。
+        </p>
+      </div>
+    </section>
+
+    <section class="works">
+      <div class="container">
+        <h2>Works</h2>
+        <ul class="works-list">
+          <li class="works-item" th:each="work : ${works}">
+            <a class="works-link" th:href="${work.url}" target="_blank" rel="noopener" th:text="${work.title}">weather-board</a>
+            <p class="works-tags" th:text="${work.tags}">React · Express · OpenWeather API</p>
+            <p class="works-summary" th:text="${work.summary}">天気予報アプリ。位置情報から3日間の予報を表示する。</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p th:text="${settings['footer.copyright']}">&copy; 2026 Kondo</p>
+    </div>
+  </footer>
 
 </body>
+
 </html>
