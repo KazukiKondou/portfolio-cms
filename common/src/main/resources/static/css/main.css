@@ -383,6 +383,19 @@ a:hover {
   color: #1a4978;
   border-left: 3px solid var(--color-accent);
 }
+.form-error {
+  color: #c84141;
+  font-size: 13px;
+  margin-top: 6px;
+}
+
+/* Contact ページ */
+.contact {
+  padding: 72px 0 96px;
+}
+.contact .hint {
+  margin-bottom: 32px;
+}
 
 /* ダッシュボード */
 .admin-dashboard {
