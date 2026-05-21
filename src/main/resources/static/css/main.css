@@ -168,6 +168,55 @@ a:hover {
 .works {
   padding: 72px 0 96px;
 }
+
+/* About ページ */
+.about {
+  padding: 72px 0 96px;
+}
+.about-bio p {
+  margin-bottom: 1.4em;
+  color: #333;
+  font-size: 16px;
+  max-width: 60ch;
+}
+.about-bio p:last-child {
+  margin-bottom: 0;
+}
+.section-title {
+  font-family: "Iowan Old Style", "Hoefler Text", Georgia, serif;
+  font-size: 24px;
+  font-weight: 400;
+  margin-top: 64px;
+  margin-bottom: 24px;
+  letter-spacing: 0.01em;
+}
+.skill-group {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 16px;
+  padding: 16px 0;
+  border-top: 1px solid var(--color-border);
+}
+.skill-group:last-child {
+  border-bottom: 1px solid var(--color-border);
+}
+.skill-category {
+  font-family: "Iowan Old Style", "Hoefler Text", Georgia, serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-text);
+}
+.skill-list {
+  color: var(--color-text-muted);
+  font-size: 15px;
+}
+
+@media (max-width: 600px) {
+  .skill-group {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+}
 .works-list {
   list-style: none;
 }

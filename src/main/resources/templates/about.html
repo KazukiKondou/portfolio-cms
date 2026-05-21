@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title th:text="|About — ${settings['site.title']}|">About — Kondo</title>
+  <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+
+<body>
+
+  <header th:replace="~{fragments/site :: header}"></header>
+
+  <main>
+    <section class="about">
+      <div class="container">
+        <h1 class="page-title">About</h1>
+
+        <div class="about-bio">
+          <p th:each="para : ${aboutBioParagraphs}" th:text="${para}">
+            自己紹介テキストの段落
+          </p>
+        </div>
+
+        <h2 class="section-title">Skills</h2>
+        <div class="skill-groups">
+          <div class="skill-group" th:each="entry : ${skillGroups}">
+            <h3 class="skill-category" th:text="${entry.key}">Languages</h3>
+            <p class="skill-list" th:text="${entry.value}">Java · TypeScript · Python · Go</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer th:replace="~{fragments/site :: footer}"></footer>
+
+</body>
+
+</html>
