@@ -16,16 +16,16 @@ spring:
 
   jpa:
     hibernate:
-      # スキーマは Flyway で管理するので、ここでは作らない
-      ddl-auto: none
+      # スキーマは Flyway 側で管理。validate でズレを検知する
+      ddl-auto: validate
     open-in-view: false
     properties:
       hibernate:
         format_sql: true
 
-  # 機能1の時点ではマイグレーション無し。機能2 で有効化する
   flyway:
-    enabled: false
+    enabled: true
+    locations: classpath:db/migration
 
   thymeleaf:
     cache: false  # 開発中はキャッシュOFF

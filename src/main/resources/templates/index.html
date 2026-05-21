@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Kondo — Portfolio</title>
+  <title th:text="|${settings['site.title']} — Portfolio|">Kondo — Portfolio</title>
   <link rel="stylesheet" th:href="@{/css/main.css}">
 </head>
 <body>
 
 <header class="site-header">
   <div class="container">
-    <a href="/" class="site-name">Kondo</a>
+    <a href="/" class="site-name" th:text="${settings['site.title']}">Kondo</a>
     <nav class="site-nav">
-      <a href="/">Home</a>
-      <a href="/works">Works</a>
-      <a href="/about">About</a>
-      <a href="/contact">Contact</a>
+      <a href="/"        th:text="${settings['nav.home']}">Home</a>
+      <a href="/works"   th:text="${settings['nav.works']}">Works</a>
+      <a href="/about"   th:text="${settings['nav.about']}">About</a>
+      <a href="/contact" th:text="${settings['nav.contact']}">Contact</a>
     </nav>
   </div>
 </header>
@@ -23,9 +23,9 @@
 <main>
   <section class="hero">
     <div class="container">
-      <h1>Kondo<span class="accent-dot">.</span></h1>
-      <p class="lead">Software Engineer / 千葉</p>
-      <p class="intro">
+      <h1><span th:text="${settings['site.title']}">Kondo</span><span class="accent-dot">.</span></h1>
+      <p class="lead" th:text="${settings['hero.tagline']}">Software Engineer / 千葉</p>
+      <p class="intro" th:text="${settings['hero.intro']}">
         Web を中心にバックエンド〜インフラまで触っているエンジニアです。
         最近は Spring Boot と TypeScript を使うことが多いです。
       </p>
@@ -35,7 +35,7 @@
 
 <footer class="site-footer">
   <div class="container">
-    <p>&copy; 2026 Kondo</p>
+    <p th:text="${settings['footer.copyright']}">&copy; 2026 Kondo</p>
   </div>
 </footer>
 
