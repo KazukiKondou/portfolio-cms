@@ -1,0 +1,13 @@
+// 公開サイト用アプリ
+plugins {
+	id 'org.springframework.boot'
+}
+
+dependencies {
+	implementation project(':common')
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
