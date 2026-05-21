@@ -1,3 +1,14 @@
+/* 色は変数で持っておいて、後で差し替えやすく */
+:root {
+  --color-text: #111;
+  --color-text-muted: #555;
+  --color-text-faint: #999;
+  --color-bg: #fff;
+  --color-border: #ececec;
+  --color-accent: #1B3B6F;       /* 藍色 */
+  --color-accent-hover: #142a52; /* hover 時は少し濃く */
+}
+
 /* リセット（最低限） */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -17,9 +28,25 @@ body {
                system-ui, sans-serif;
   font-weight: 400;
   line-height: 1.7;
-  color: #111;
-  background: #fff;
+  color: var(--color-text);
+  background: var(--color-bg);
   -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+a:hover {
+  color: var(--color-accent-hover);
+}
+
+/* フォーカスは藍色で目立たせる（アクセシビリティ） */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
 /* レイアウト */
@@ -32,7 +59,7 @@ body {
 /* ヘッダー */
 .site-header {
   padding: 28px 0;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--color-border);
 }
 .site-header .container {
   display: flex;
@@ -42,18 +69,20 @@ body {
 .site-name {
   font-family: "Iowan Old Style", "Hoefler Text", Georgia, serif;
   font-size: 18px;
-  color: #111;
+  color: var(--color-text);
   text-decoration: none;
   letter-spacing: 0.01em;
 }
+.site-name:hover {
+  color: var(--color-text);
+}
 .site-nav a {
   margin-left: 24px;
-  color: #555;
-  text-decoration: none;
+  color: var(--color-text-muted);
   font-size: 14px;
 }
 .site-nav a:hover {
-  color: #111;
+  color: var(--color-accent);
 }
 
 /* ヒーロー */
@@ -66,12 +95,27 @@ body {
   font-weight: 400;
   line-height: 1.05;
   letter-spacing: -0.015em;
-  color: #111;
+  color: var(--color-text);
+}
+.hero h1 .accent-dot {
+  /* 名前の最後に藍色のドット。サイトのアクセントとして1点 */
+  color: var(--color-accent);
 }
 .hero .lead {
-  margin-top: 12px;
+  margin-top: 14px;
   font-size: 17px;
-  color: #555;
+  color: var(--color-text-muted);
+}
+.hero .lead::before {
+  /* lead の前に短い藍色の線を入れる */
+  content: "";
+  display: inline-block;
+  width: 28px;
+  height: 1px;
+  background: var(--color-accent);
+  vertical-align: middle;
+  margin-right: 12px;
+  transform: translateY(-2px);
 }
 .hero .intro {
   margin-top: 32px;
@@ -84,8 +128,8 @@ body {
 .site-footer {
   margin-top: 120px;
   padding: 32px 0;
-  border-top: 1px solid #f0f0f0;
-  color: #999;
+  border-top: 1px solid var(--color-border);
+  color: var(--color-text-faint);
   font-size: 13px;
 }
 
