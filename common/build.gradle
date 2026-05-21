@@ -1,11 +1,11 @@
-// 共有モジュール: エンティティ、リポジトリ、サービス、Flyway マイグレーション、共通 CSS
-// site / admin から JPA を使えるように java-library + api で公開する
+// 共有モジュール: エンティティ、リポジトリ、サービス、Flyway マイグレーション、共通 CSS、共有コントローラ
 plugins {
 	id 'java-library'
 }
 
 dependencies {
 	api 'org.springframework.boot:spring-boot-starter-data-jpa'
+	api 'org.springframework.boot:spring-boot-starter-web'
 
 	implementation 'org.flywaydb:flyway-core'
 	implementation 'org.flywaydb:flyway-database-postgresql'

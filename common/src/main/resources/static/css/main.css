@@ -413,6 +413,92 @@ a:hover {
   margin-left: 8px;
 }
 
+/* 写真アップロード */
+.photo-current {
+  margin-bottom: 40px;
+  padding: 20px 0;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+.photo-preview {
+  margin-top: 12px;
+}
+.photo-preview img {
+  width: 180px;
+  height: 240px;
+  object-fit: cover;
+  border: 1px solid var(--color-border);
+  display: block;
+  margin-bottom: 8px;
+}
+input[type="file"] {
+  font-family: inherit;
+  font-size: 14px;
+}
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 13px;
+  background: #f5f5f5;
+  padding: 2px 6px;
+}
+
+/* 管理画面の一覧 (works/skills) */
+.admin-list-actions {
+  margin-bottom: 24px;
+}
+.admin-list {
+  list-style: none;
+}
+.admin-list-item {
+  padding: 20px 0;
+  border-top: 1px solid var(--color-border);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 16px;
+  align-items: center;
+}
+.admin-list-item:last-child {
+  border-bottom: 1px solid var(--color-border);
+}
+.admin-list-item .item-title {
+  font-family: "Iowan Old Style", "Hoefler Text", Georgia, serif;
+  font-size: 18px;
+  color: var(--color-text);
+}
+.admin-list-item .item-meta {
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--color-text-faint);
+}
+.admin-list-item .item-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.admin-list-item .item-actions a,
+.admin-list-item .item-actions button {
+  font-size: 13px;
+}
+.admin-list-item .item-delete {
+  background: none;
+  border: none;
+  color: #c84141;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 0;
+}
+.admin-list-item .item-delete:hover {
+  text-decoration: underline;
+}
+.badge-draft {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 6px;
+  font-size: 11px;
+  background: #f0f0f0;
+  color: #666;
+}
+
 /* レスポンシブ */
 @media (max-width: 700px) {
   .hero { padding: 56px 0 40px; }
