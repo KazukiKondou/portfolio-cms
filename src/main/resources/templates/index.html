@@ -14,13 +14,19 @@
 
   <main>
     <section class="hero">
-      <div class="container">
-        <h1><span th:text="${settings['site.title']}">Kondo</span><span class="accent-dot">.</span></h1>
-        <p class="lead" th:text="${settings['hero.tagline']}">Software Engineer / 静岡</p>
-        <p class="intro" th:text="${settings['hero.intro']}">
-          Web を中心にバックエンド〜インフラまで触っているエンジニアです。
-          最近は Spring Boot と TypeScript を使うことが多いです。
-        </p>
+      <div class="container hero-grid">
+        <div class="hero-text">
+          <h1><span th:text="${settings['site.title']}">Kondo</span><span class="accent-dot">.</span></h1>
+          <p class="lead" th:text="${settings['hero.tagline']}">Software Engineer / 静岡</p>
+          <p class="intro" th:text="${settings['hero.intro']}">
+            Web を中心にバックエンド〜インフラまで触っているエンジニアです。
+            最近は Spring Boot と TypeScript を使うことが多いです。
+          </p>
+        </div>
+        <div class="hero-photo">
+          <img th:if="${!#strings.isEmpty(settings['hero.photoUrl'])}"
+               th:src="${settings['hero.photoUrl']}" alt="" class="hero-photo-img">
+        </div>
       </div>
     </section>
   </main>
