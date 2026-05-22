@@ -15,9 +15,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.site
-    # Cloudflare Tunnel 経由で公開する想定。ホストの 8080 にだけ流す
+    # 本番想定: 127.0.0.1 だけ bind して Cloudflare Tunnel 経由で公開
+    # Tunnel 設定前のテストなら Tailscale IP を SITE_BIND に入れて preview する
     ports:
-      - "127.0.0.1:8080:8080"
+      - "${SITE_BIND:-127.0.0.1}:8080:8080"
     environment:
       SPRING_PROFILES_ACTIVE: prod
       DATABASE_URL: jdbc:postgresql://postgres:5432/portfolio
