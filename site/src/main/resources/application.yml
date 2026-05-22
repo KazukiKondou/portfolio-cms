@@ -2,9 +2,10 @@ spring:
   application:
     name: portfolio-site
 
-  # 開発時は H2 のインメモリ。本番は PostgreSQL に切り替える
+  # 開発時は H2 ファイルモード。AUTO_SERVER=TRUE で site と admin を同じDBに繋ぐ
+  # 本番では PostgreSQL に切り替える (application-prod.yml)
   datasource:
-    url: jdbc:h2:mem:portfolio;DB_CLOSE_DELAY=-1
+    url: jdbc:h2:file:${user.home}/portfolio-cms-data/portfolio;AUTO_SERVER=TRUE;DB_CLOSE_DELAY=-1
     driver-class-name: org.h2.Driver
     username: sa
     password: ""
