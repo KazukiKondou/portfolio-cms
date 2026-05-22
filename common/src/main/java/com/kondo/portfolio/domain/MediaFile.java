@@ -5,7 +5,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 
@@ -29,7 +28,8 @@ public class MediaFile {
     @Column(name = "size_bytes", nullable = false)
     private Long sizeBytes;
 
-    @Lob
+    // @Lob を付けると PostgreSQL では oid (Large Object) になってしまう
+    // bytea にしたいので素の byte[] のままにしておく (Hibernate 6 のデフォルトで VARBINARY/bytea)
     @Column(nullable = false)
     private byte[] data;
 
