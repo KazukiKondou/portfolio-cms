@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title th:text="|${status ?: 'Error'} — Admin|">Error — Admin</title>
+  <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+
+<body>
+
+  <header th:replace="~{fragments/admin :: header}"></header>
+
+  <main>
+    <section class="admin-edit">
+      <div class="container">
+        <h1 class="page-title" th:text="${status} ?: 'Error'">404</h1>
+        <p class="hint" th:text="${error} ?: 'ページが見つかりませんでした。'">Not Found</p>
+        <p style="margin-top: 24px;">
+          <a href="/admin">← ダッシュボードに戻る</a>
+        </p>
+      </div>
+    </section>
+  </main>
+
+</body>
+
+</html>

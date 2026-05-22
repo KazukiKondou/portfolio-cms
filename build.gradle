@@ -29,6 +29,12 @@ subprojects {
 		}
 	}
 
+	// Spring の @PathVariable や @RequestParam で名前推論を効かせるために必須
+	// :common は Spring Boot プラグインを適用してないので明示的に入れる
+	tasks.withType(JavaCompile).configureEach {
+		options.compilerArgs.add('-parameters')
+	}
+
 	tasks.withType(Test).configureEach {
 		useJUnitPlatform()
 	}
