@@ -107,15 +107,15 @@ a:hover {
 }
 .hero-photo {
   width: 320px;
-  height: 420px;
+  /* 写真ありのときは画像の高さに合わせる、無いときは min-height でプレースホルダ表示 */
+  min-height: 420px;
   background-color: rgba(27, 59, 111, 0.04);
   border: 1px solid rgba(27, 59, 111, 0.12);
   overflow: hidden;
 }
 .hero-photo-img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
   display: block;
 }
 .hero h1 {
@@ -590,7 +590,7 @@ code {
   }
   .hero-photo {
     width: 240px;
-    height: 320px;
+    min-height: 320px;
   }
   .site-nav a { margin-left: 16px; font-size: 13px; }
 }
