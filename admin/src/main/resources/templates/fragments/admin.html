@@ -7,7 +7,7 @@
     <div class="container">
       <a href="/admin" class="site-name">Admin</a>
       <nav class="site-nav">
-        <a href="/" target="_blank" rel="noopener">サイトを見る ↗</a>
+        <a th:href="${settings['urls.site']} ?: '/'" target="_blank" rel="noopener">サイトを見る ↗</a>
         <form method="post" th:action="@{/admin/logout}" class="logout-form">
           <button type="submit" class="btn-link">ログアウト</button>
         </form>
