@@ -22,7 +22,7 @@ portfolio-cms/
 - Spring Boot 3.5 (Java 21)
 - Thymeleaf
 - Spring Security (admin のみ)
-- PostgreSQL (本番) / H2 (開発)
+- H2 (開発・本番共通、本番では別コンテナで TCP サーバ起動)
 - Flyway
 
 ## ローカル開発
@@ -37,7 +37,7 @@ portfolio-cms/
 
 管理画面のログイン: `admin / admin` （本番は必ず変更）。
 
-⚠️ 開発時は :site と :admin で別の H2 in-memory を使っているので、片方で書き換えてももう片方には反映されない。本番では同じ PostgreSQL を見るので問題なし。
+開発時は ~/portfolio-cms-data/ の H2 ファイルを :site と :admin で共有（AUTO_SERVER モード）。本番では別コンテナの H2 TCP サーバを両方が見る。
 
 ## CMS で編集できるもの
 
@@ -54,9 +54,16 @@ portfolio-cms/
 ```bash
 # 初回
 cp .env.example .env
-vi .env  # POSTGRES_PASSWORD, ADMIN_PASSWORD, ADMIN_BIND を編集
+vi .env  # ADMIN_PASSWORD, ADMIN_BIND, SITE_BIND を編集
 docker compose up -d --build
 ```
+
+3つのコンテナが起動:
+- `h2`: 共有 DB (内部ネットワークのみ)
+- `site`: 公開サイト (8080)
+- `admin`: 管理画面 (8081)
+
+データは Docker volume `h2_data` に永続化される。
 
 ### Cloudflare Tunnel (公開サイト用)
 

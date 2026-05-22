@@ -1,0 +1,12 @@
+# 軽量 H2 TCP サーバー (site / admin の両方からアクセスされる共有DB)
+FROM eclipse-temurin:21-jre
+
+# H2 の jar をダウンロードして配置
+ADD https://repo1.maven.org/maven2/com/h2database/h2/2.3.232/h2-2.3.232.jar /opt/h2.jar
+
+EXPOSE 9092
+
+# /data/portfolio.mv.db に書き出される。docker volume で永続化
+ENTRYPOINT ["java", "-cp", "/opt/h2.jar", "org.h2.tools.Server", \
+            "-tcp", "-tcpAllowOthers", "-tcpPort", "9092", \
+            "-baseDir", "/data", "-ifNotExists"]

@@ -1,12 +1,11 @@
 services:
-  postgres:
-    image: postgres:16-alpine
-    environment:
-      POSTGRES_DB: portfolio
-      POSTGRES_USER: portfolio
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+  # 軽量な共有 DB (H2 TCP サーバ)。site / admin の両方が接続する
+  h2:
+    build:
+      context: .
+      dockerfile: Dockerfile.h2
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - h2_data:/data
     restart: unless-stopped
     networks:
       - internal
@@ -21,11 +20,11 @@ services:
       - "${SITE_BIND:-127.0.0.1}:8080:8080"
     environment:
       SPRING_PROFILES_ACTIVE: prod
-      DATABASE_URL: jdbc:postgresql://postgres:5432/portfolio
-      DATABASE_USER: portfolio
-      DATABASE_PASSWORD: ${POSTGRES_PASSWORD}
+      DATABASE_URL: jdbc:h2:tcp://h2:9092//data/portfolio;DB_CLOSE_DELAY=-1
+      DATABASE_USER: sa
+      DATABASE_PASSWORD: ""
     depends_on:
-      - postgres
+      - h2
     restart: unless-stopped
     networks:
       - internal
@@ -34,25 +33,25 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.admin
-    # Tailscale IF にだけ bind する。${TAILSCALE_IP} は kondo-home-server のタスIP
+    # Tailscale IF にだけ bind する。${ADMIN_BIND} は kondo-home-server のタスIP
     # 外には絶対出さないように 127.0.0.1 か tailscale IP のみ
     ports:
       - "${ADMIN_BIND:-127.0.0.1}:8081:8081"
     environment:
       SPRING_PROFILES_ACTIVE: prod
-      DATABASE_URL: jdbc:postgresql://postgres:5432/portfolio
-      DATABASE_USER: portfolio
-      DATABASE_PASSWORD: ${POSTGRES_PASSWORD}
+      DATABASE_URL: jdbc:h2:tcp://h2:9092//data/portfolio;DB_CLOSE_DELAY=-1
+      DATABASE_USER: sa
+      DATABASE_PASSWORD: ""
       ADMIN_USERNAME: ${ADMIN_USERNAME}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD}
     depends_on:
-      - postgres
+      - h2
     restart: unless-stopped
     networks:
       - internal
 
 volumes:
-  postgres_data:
+  h2_data:
 
 networks:
   internal:

@@ -1,9 +1,9 @@
 spring:
   datasource:
     url: ${DATABASE_URL}
-    username: ${DATABASE_USER}
-    password: ${DATABASE_PASSWORD}
-    driver-class-name: org.postgresql.Driver
+    username: ${DATABASE_USER:sa}
+    password: ${DATABASE_PASSWORD:}
+    driver-class-name: org.h2.Driver
 
   h2:
     console:
@@ -14,10 +14,9 @@ spring:
       ddl-auto: validate
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
+        dialect: org.hibernate.dialect.H2Dialect
 
-  # admin は migration を走らせず、site 側が反映済みのスキーマを使う想定
-  # 両方 enabled にしても Flyway の lock で安全だが、起動順依存を減らすため admin は validate
+  # 両方が起動時 migrate を試みても Flyway の lock で安全
   flyway:
     enabled: true
     locations: classpath:db/migration
@@ -27,6 +26,7 @@ spring:
     cache: true
 
 server:
+  # site と被らない別ポート
   port: 8081
   # Reverse proxy 越しのリクエストにも対応 (Tailscale 経由でも素の HTTP だが念のため)
   forward-headers-strategy: framework
