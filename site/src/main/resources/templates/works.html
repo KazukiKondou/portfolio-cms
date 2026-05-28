@@ -18,9 +18,15 @@
         <h1 class="page-title">Works</h1>
         <ul class="works-list">
           <li class="works-item" th:each="work : ${works}">
-            <a class="works-link" th:href="${work.url}" target="_blank" rel="noopener" th:text="${work.title}">weather-board</a>
-            <p class="works-tags" th:text="${work.tags}">React · Express · OpenWeather API</p>
-            <p class="works-summary" th:text="${work.summary}">天気予報アプリ。位置情報から3日間の予報を表示する。</p>
+            <!-- URL があれば外部リンク、無ければただのテキスト -->
+            <a th:if="${!#strings.isEmpty(work.url)}" class="works-link"
+               th:href="${work.url}" target="_blank" rel="noopener" th:text="${work.title}">weather-board</a>
+            <span th:if="${#strings.isEmpty(work.url)}" class="works-link works-link-plain"
+                  th:text="${work.title}">weather-board</span>
+
+            <p class="works-tags" th:if="${!#strings.isEmpty(work.tags)}" th:text="${work.tags}">React · Express</p>
+            <p class="works-summary" th:if="${!#strings.isEmpty(work.summary)}" th:text="${work.summary}">サマリー</p>
+            <p class="works-description" th:if="${!#strings.isEmpty(work.description)}" th:text="${work.description}">詳細</p>
           </li>
         </ul>
       </div>
