@@ -1,0 +1,36 @@
+#!/bin/sh
+#
+# コミット前に Spotless で Java を自動整形する pre-commit hook。
+# 有効化: git config core.hooksPath .githooks
+#
+
+# staged な Java ファイルだけ対象。無ければ何もせず通す
+staged_java=$(git diff --cached --name-only --diff-filter=ACM | grep '\.java$' || true)
+if [ -z "$staged_java" ]; then
+    exit 0
+fi
+
+# 動く JDK を確保する (macOS は java_home で 25 → 21 → 17 の順に探す)
+# google-java-format は新しめの JDK を要求するので、古い JDK を掴まないようにする
+if [ -x /usr/libexec/java_home ]; then
+    for v in 25 21 17; do
+        if home=$(/usr/libexec/java_home -v "$v" 2>/dev/null); then
+            JAVA_HOME="$home"
+            export JAVA_HOME
+            break
+        fi
+    done
+fi
+
+echo "[pre-commit] spotlessApply で整形中..."
+if ! ./gradlew spotlessApply --quiet; then
+    echo "[pre-commit] spotlessApply が失敗しました。コミットを中止します。"
+    exit 1
+fi
+
+# 整形で変わったファイルを再度ステージし直す
+echo "$staged_java" | while IFS= read -r f; do
+    [ -f "$f" ] && git add -- "$f"
+done
+
+exit 0
