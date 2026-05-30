@@ -2,9 +2,7 @@ package com.kondo.portfolio.admin.form;
 
 import com.kondo.portfolio.domain.Skill;
 
-/**
- * /admin/skills の新規作成・編集用フォーム
- */
+/** /admin/skills の新規作成・編集用フォーム */
 public class SkillForm {
 
     private String name;
@@ -34,12 +32,35 @@ public class SkillForm {
         return s;
     }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-    public Integer getProficiency() { return proficiency; }
-    public void setProficiency(Integer proficiency) { this.proficiency = proficiency; }
-    public Integer getSortOrder() { return sortOrder; }
-    public void setSortOrder(Integer sortOrder) { this.sortOrder = sortOrder; }
-    public Boolean getPublished() { return published; }
-    public void setPublished(Boolean published) { this.published = published; }
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getProficiency() {
+        return proficiency;
+    }
+
+    public void setProficiency(Integer proficiency) {
+        this.proficiency = proficiency;
+    }
+
+    public Integer getSortOrder() {
+        return sortOrder;
+    }
+
+    public void setSortOrder(Integer sortOrder) {
+        this.sortOrder = sortOrder;
+    }
+
+    public Boolean getPublished() {
+        return published;
+    }
+
+    public void setPublished(Boolean published) {
+        this.published = published;
+    }
 }

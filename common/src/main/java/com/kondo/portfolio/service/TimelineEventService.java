@@ -2,13 +2,12 @@ package com.kondo.portfolio.service;
 
 import com.kondo.portfolio.domain.TimelineEvent;
 import com.kondo.portfolio.repository.TimelineEventRepository;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class TimelineEventService {
@@ -46,15 +45,16 @@ public class TimelineEventService {
         return repository.save(event);
     }
 
-    /**
-     * id で既存レコードを引いて applier で変更を当て、保存する。
-     */
+    /** id で既存レコードを引いて applier で変更を当て、保存する。 */
     @Transactional
     public Optional<TimelineEvent> update(Long id, Consumer<TimelineEvent> applier) {
-        return repository.findById(id).map(existing -> {
-            applier.accept(existing);
-            return save(existing);
-        });
+        return repository
+                .findById(id)
+                .map(
+                        existing -> {
+                            applier.accept(existing);
+                            return save(existing);
+                        });
     }
 
     @Transactional

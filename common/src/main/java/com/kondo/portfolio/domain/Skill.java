@@ -8,9 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 
-/**
- * スキル（名前 + 習熟度）
- */
+/** スキル（名前 + 習熟度） */
 @Entity
 @Table(name = "skills")
 public class Skill {

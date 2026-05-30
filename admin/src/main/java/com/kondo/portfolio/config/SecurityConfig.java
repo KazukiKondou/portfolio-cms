@@ -20,24 +20,26 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/admin/login").permitAll()
-                        .requestMatchers("/admin/**").authenticated()
-                        .anyRequest().permitAll()
-                )
-                .formLogin(form -> form
-                        .loginPage("/admin/login")
-                        .loginProcessingUrl("/admin/login")
-                        .defaultSuccessUrl("/admin", true)
-                        .failureUrl("/admin/login?error")
-                        .permitAll()
-                )
-                .logout(logout -> logout
-                        .logoutUrl("/admin/logout")
-                        .logoutSuccessUrl("/admin/login?logout")
-                        .permitAll()
-                )
+        http.authorizeHttpRequests(
+                        auth ->
+                                auth.requestMatchers("/admin/login")
+                                        .permitAll()
+                                        .requestMatchers("/admin/**")
+                                        .authenticated()
+                                        .anyRequest()
+                                        .permitAll())
+                .formLogin(
+                        form ->
+                                form.loginPage("/admin/login")
+                                        .loginProcessingUrl("/admin/login")
+                                        .defaultSuccessUrl("/admin", true)
+                                        .failureUrl("/admin/login?error")
+                                        .permitAll())
+                .logout(
+                        logout ->
+                                logout.logoutUrl("/admin/logout")
+                                        .logoutSuccessUrl("/admin/login?logout")
+                                        .permitAll())
                 // 開発時に H2 console を使うので CSRF と frame を緩める
                 .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
                 .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()));
@@ -51,11 +53,12 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService(AdminCredentials creds, PasswordEncoder encoder) {
-        UserDetails admin = User.builder()
-                .username(creds.username())
-                .password(encoder.encode(creds.password()))
-                .roles("ADMIN")
-                .build();
+        UserDetails admin =
+                User.builder()
+                        .username(creds.username())
+                        .password(encoder.encode(creds.password()))
+                        .roles("ADMIN")
+                        .build();
         return new InMemoryUserDetailsManager(admin);
     }
 }

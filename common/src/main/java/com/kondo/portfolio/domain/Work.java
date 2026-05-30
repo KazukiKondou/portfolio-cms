@@ -8,9 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 
-/**
- * 作品（ポートフォリオに載せるプロジェクト）
- */
+/** 作品（ポートフォリオに載せるプロジェクト） */
 @Entity
 @Table(name = "works")
 public class Work {

@@ -2,6 +2,8 @@ package com.kondo.portfolio.controller.admin;
 
 import com.kondo.portfolio.service.MediaFileService;
 import com.kondo.portfolio.service.SiteSettingService;
+import java.io.IOException;
+import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,12 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.io.IOException;
-import java.util.Map;
-
-/**
- * 写真（ヒーロー画像）のアップロード画面
- */
+/** 写真（ヒーロー画像）のアップロード画面 */
 @Controller
 @RequestMapping("/admin/media")
 public class AdminMediaController {
@@ -37,7 +34,8 @@ public class AdminMediaController {
     }
 
     @PostMapping
-    public String upload(@RequestParam("file") MultipartFile file, RedirectAttributes redirect) throws IOException {
+    public String upload(@RequestParam("file") MultipartFile file, RedirectAttributes redirect)
+            throws IOException {
         if (file.isEmpty()) {
             redirect.addFlashAttribute("error", "ファイルを選択してください");
             return "redirect:/admin/media";

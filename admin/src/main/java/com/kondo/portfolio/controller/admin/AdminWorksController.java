@@ -3,6 +3,7 @@ package com.kondo.portfolio.controller.admin;
 import com.kondo.portfolio.admin.form.WorkForm;
 import com.kondo.portfolio.domain.Work;
 import com.kondo.portfolio.service.WorkService;
+import java.util.Optional;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,11 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Optional;
-
-/**
- * 作品一覧の管理画面（CRUD）
- */
+/** 作品一覧の管理画面（CRUD） */
 @Controller
 @RequestMapping("/admin/works")
 public class AdminWorksController {
@@ -45,14 +42,18 @@ public class AdminWorksController {
 
     @GetMapping("/{id}/edit")
     public String editForm(@PathVariable Long id, Model model, RedirectAttributes redirect) {
-        return service.findById(id).map(w -> {
-            model.addAttribute("work", WorkForm.fromEntity(w));
-            model.addAttribute("isNew", false);
-            return "admin/works/form";
-        }).orElseGet(() -> {
-            redirect.addFlashAttribute("error", "見つかりませんでした");
-            return "redirect:/admin/works";
-        });
+        return service.findById(id)
+                .map(
+                        w -> {
+                            model.addAttribute("work", WorkForm.fromEntity(w));
+                            model.addAttribute("isNew", false);
+                            return "admin/works/form";
+                        })
+                .orElseGet(
+                        () -> {
+                            redirect.addFlashAttribute("error", "見つかりませんでした");
+                            return "redirect:/admin/works";
+                        });
     }
 
     @PostMapping
@@ -63,7 +64,10 @@ public class AdminWorksController {
     }
 
     @PostMapping("/{id}")
-    public String update(@PathVariable Long id, @ModelAttribute("work") WorkForm form, RedirectAttributes redirect) {
+    public String update(
+            @PathVariable Long id,
+            @ModelAttribute("work") WorkForm form,
+            RedirectAttributes redirect) {
         Optional<Work> updated = service.update(id, form::applyTo);
         if (updated.isEmpty()) {
             redirect.addFlashAttribute("error", "見つかりませんでした");

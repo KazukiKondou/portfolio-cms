@@ -5,9 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-/**
- * 公開サイト (ポートフォリオ本体) のエントリポイント
- */
+/** 公開サイト (ポートフォリオ本体) のエントリポイント */
 @SpringBootApplication(scanBasePackages = "com.kondo.portfolio")
 @EntityScan("com.kondo.portfolio.domain")
 @EnableJpaRepositories("com.kondo.portfolio.repository")

@@ -5,9 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * /admin/settings のフォームバインディング用
- */
+/** /admin/settings のフォームバインディング用 */
 public class SettingsForm {
 
     private List<Entry> entries = new ArrayList<>();

@@ -1,19 +1,14 @@
 package com.kondo.portfolio.service;
 
-import org.springframework.stereotype.Service;
-
 import java.util.Arrays;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
-/**
- * About ページ用のドメインロジック
- */
+/** About ページ用のドメインロジック */
 @Service
 public class AboutService {
 
-    /**
-     * 自己紹介テキストを空行で段落に分割する
-     */
+    /** 自己紹介テキストを空行で段落に分割する */
     public List<String> splitBioParagraphs(String text) {
         if (text == null || text.isBlank()) {
             return List.of();

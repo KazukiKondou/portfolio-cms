@@ -3,6 +3,7 @@ package com.kondo.portfolio.controller.admin;
 import com.kondo.portfolio.admin.form.TimelineEventForm;
 import com.kondo.portfolio.domain.TimelineEvent;
 import com.kondo.portfolio.service.TimelineEventService;
+import java.util.Optional;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,11 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Optional;
-
-/**
- * Timeline (略歴) の管理画面
- */
+/** Timeline (略歴) の管理画面 */
 @Controller
 @RequestMapping("/admin/timeline")
 public class AdminTimelineController {
@@ -45,25 +42,33 @@ public class AdminTimelineController {
 
     @GetMapping("/{id}/edit")
     public String editForm(@PathVariable Long id, Model model, RedirectAttributes redirect) {
-        return service.findById(id).map(ev -> {
-            model.addAttribute("event", TimelineEventForm.fromEntity(ev));
-            model.addAttribute("isNew", false);
-            return "admin/timeline/form";
-        }).orElseGet(() -> {
-            redirect.addFlashAttribute("error", "見つかりませんでした");
-            return "redirect:/admin/timeline";
-        });
+        return service.findById(id)
+                .map(
+                        ev -> {
+                            model.addAttribute("event", TimelineEventForm.fromEntity(ev));
+                            model.addAttribute("isNew", false);
+                            return "admin/timeline/form";
+                        })
+                .orElseGet(
+                        () -> {
+                            redirect.addFlashAttribute("error", "見つかりませんでした");
+                            return "redirect:/admin/timeline";
+                        });
     }
 
     @PostMapping
-    public String create(@ModelAttribute("event") TimelineEventForm form, RedirectAttributes redirect) {
+    public String create(
+            @ModelAttribute("event") TimelineEventForm form, RedirectAttributes redirect) {
         service.save(form.toEntity());
         redirect.addFlashAttribute("message", "作成しました");
         return "redirect:/admin/timeline";
     }
 
     @PostMapping("/{id}")
-    public String update(@PathVariable Long id, @ModelAttribute("event") TimelineEventForm form, RedirectAttributes redirect) {
+    public String update(
+            @PathVariable Long id,
+            @ModelAttribute("event") TimelineEventForm form,
+            RedirectAttributes redirect) {
         Optional<TimelineEvent> updated = service.update(id, form::applyTo);
         if (updated.isEmpty()) {
             redirect.addFlashAttribute("error", "見つかりませんでした");

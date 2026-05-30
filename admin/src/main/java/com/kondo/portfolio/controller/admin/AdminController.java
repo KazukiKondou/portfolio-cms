@@ -4,9 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-/**
- * 管理画面のトップ（ダッシュボード）とログイン画面
- */
+/** 管理画面のトップ（ダッシュボード）とログイン画面 */
 @Controller
 @RequestMapping("/admin")
 public class AdminController {

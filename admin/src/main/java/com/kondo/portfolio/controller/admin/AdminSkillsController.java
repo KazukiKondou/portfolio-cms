@@ -3,6 +3,7 @@ package com.kondo.portfolio.controller.admin;
 import com.kondo.portfolio.admin.form.SkillForm;
 import com.kondo.portfolio.domain.Skill;
 import com.kondo.portfolio.service.SkillService;
+import java.util.Optional;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,11 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Optional;
-
-/**
- * スキルの管理画面（CRUD）
- */
+/** スキルの管理画面（CRUD） */
 @Controller
 @RequestMapping("/admin/skills")
 public class AdminSkillsController {
@@ -46,14 +43,18 @@ public class AdminSkillsController {
 
     @GetMapping("/{id}/edit")
     public String editForm(@PathVariable Long id, Model model, RedirectAttributes redirect) {
-        return service.findById(id).map(s -> {
-            model.addAttribute("skill", SkillForm.fromEntity(s));
-            model.addAttribute("isNew", false);
-            return "admin/skills/form";
-        }).orElseGet(() -> {
-            redirect.addFlashAttribute("error", "見つかりませんでした");
-            return "redirect:/admin/skills";
-        });
+        return service.findById(id)
+                .map(
+                        s -> {
+                            model.addAttribute("skill", SkillForm.fromEntity(s));
+                            model.addAttribute("isNew", false);
+                            return "admin/skills/form";
+                        })
+                .orElseGet(
+                        () -> {
+                            redirect.addFlashAttribute("error", "見つかりませんでした");
+                            return "redirect:/admin/skills";
+                        });
     }
 
     @PostMapping
@@ -64,7 +65,10 @@ public class AdminSkillsController {
     }
 
     @PostMapping("/{id}")
-    public String update(@PathVariable Long id, @ModelAttribute("skill") SkillForm form, RedirectAttributes redirect) {
+    public String update(
+            @PathVariable Long id,
+            @ModelAttribute("skill") SkillForm form,
+            RedirectAttributes redirect) {
         Optional<Skill> updated = service.update(id, form::applyTo);
         if (updated.isEmpty()) {
             redirect.addFlashAttribute("error", "見つかりませんでした");

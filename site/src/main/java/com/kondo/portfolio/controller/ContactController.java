@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-/**
- * 公開サイトのお問い合わせフォーム
- */
+/** 公開サイトのお問い合わせフォーム */
 @Controller
 @RequestMapping("/contact")
 public class ContactController {
@@ -34,9 +32,10 @@ public class ContactController {
     }
 
     @PostMapping
-    public String submit(@Valid @ModelAttribute("contactForm") ContactForm form,
-                         BindingResult result,
-                         RedirectAttributes redirect) {
+    public String submit(
+            @Valid @ModelAttribute("contactForm") ContactForm form,
+            BindingResult result,
+            RedirectAttributes redirect) {
         if (result.hasErrors()) {
             // バリデーションエラー時は入力を保持してフォームに戻す
             return "contact";

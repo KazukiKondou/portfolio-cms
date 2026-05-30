@@ -6,9 +6,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 
-/**
- * サイトの文言・設定値（key/value 形式）
- */
+/** サイトの文言・設定値（key/value 形式） */
 @Entity
 @Table(name = "site_settings")
 public class SiteSetting {
