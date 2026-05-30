@@ -1,0 +1,4 @@
+# 一括フォーマット適用のコミット。git blame で無視する。
+# 使い方: git config blame.ignoreRevsFile .git-blame-ignore-revs
+# Spotless で全 Java コードを整形
+a446a7d9d8f0c522cf3de9a37bbe8f86b3a4c97e
