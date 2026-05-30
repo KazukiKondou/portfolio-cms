@@ -37,6 +37,21 @@ portfolio-cms/
 
 管理画面のログイン: `admin / admin` （本番は必ず変更）。
 
+## コードフォーマット
+
+Spotless + google-java-format (AOSP スタイル = 4スペース、改行 CRLF) を使用。
+
+```bash
+./gradlew spotlessApply   # 整形を適用
+./gradlew spotlessCheck   # 整形済みか検証 (build 時にも自動で走る)
+```
+
+git blame でフォーマット一括適用のコミットを無視したい場合:
+
+```bash
+git config blame.ignoreRevsFile .git-blame-ignore-revs
+```
+
 開発時は ~/portfolio-cms-data/ の H2 ファイルを :site と :admin で共有（AUTO_SERVER モード）。本番では別コンテナの H2 TCP サーバを両方が見る。
 
 ## CMS で編集できるもの
