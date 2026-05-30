@@ -2,20 +2,12 @@ package com.kondo.portfolio.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import java.time.LocalDateTime;
 
 /** 管理画面からアップロードした画像ファイル */
 @Entity
 @Table(name = "media_files")
-public class MediaFile {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class MediaFile extends BaseEntity {
 
     @Column(nullable = false, length = 255)
     private String filename;
@@ -30,17 +22,6 @@ public class MediaFile {
     // bytea にしたいので素の byte[] のままにしておく (Hibernate 6 のデフォルトで VARBINARY/bytea)
     @Column(nullable = false)
     private byte[] data;
-
-    @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getFilename() {
         return filename;
@@ -72,13 +53,5 @@ public class MediaFile {
 
     public void setData(byte[] data) {
         this.data = data;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
     }
 }
