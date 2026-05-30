@@ -1,5 +1,6 @@
 package com.kondo.portfolio.controller.admin;
 
+import com.kondo.portfolio.admin.form.TimelineEventForm;
 import com.kondo.portfolio.domain.TimelineEvent;
 import com.kondo.portfolio.service.TimelineEventService;
 import org.springframework.stereotype.Controller;
@@ -34,10 +35,10 @@ public class AdminTimelineController {
 
     @GetMapping("/new")
     public String newForm(Model model) {
-        TimelineEvent e = new TimelineEvent();
-        e.setPublished(true);
-        e.setSortOrder(0);
-        model.addAttribute("event", e);
+        TimelineEventForm form = new TimelineEventForm();
+        form.setPublished(true);
+        form.setSortOrder(0);
+        model.addAttribute("event", form);
         model.addAttribute("isNew", true);
         return "admin/timeline/form";
     }
@@ -45,7 +46,7 @@ public class AdminTimelineController {
     @GetMapping("/{id}/edit")
     public String editForm(@PathVariable Long id, Model model, RedirectAttributes redirect) {
         return service.findById(id).map(ev -> {
-            model.addAttribute("event", ev);
+            model.addAttribute("event", TimelineEventForm.fromEntity(ev));
             model.addAttribute("isNew", false);
             return "admin/timeline/form";
         }).orElseGet(() -> {
@@ -55,24 +56,15 @@ public class AdminTimelineController {
     }
 
     @PostMapping
-    public String create(@ModelAttribute("event") TimelineEvent event, RedirectAttributes redirect) {
-        event.setId(null);
-        service.save(event);
+    public String create(@ModelAttribute("event") TimelineEventForm form, RedirectAttributes redirect) {
+        service.save(form.toEntity());
         redirect.addFlashAttribute("message", "作成しました");
         return "redirect:/admin/timeline";
     }
 
     @PostMapping("/{id}")
-    public String update(@PathVariable Long id, @ModelAttribute("event") TimelineEvent event, RedirectAttributes redirect) {
-        Optional<TimelineEvent> updated = service.update(id, existing -> {
-            existing.setYear(event.getYear());
-            existing.setMonth(event.getMonth());
-            existing.setTitle(event.getTitle());
-            existing.setDescription(event.getDescription());
-            existing.setTags(event.getTags());
-            existing.setSortOrder(event.getSortOrder() == null ? 0 : event.getSortOrder());
-            existing.setPublished(event.getPublished() != null && event.getPublished());
-        });
+    public String update(@PathVariable Long id, @ModelAttribute("event") TimelineEventForm form, RedirectAttributes redirect) {
+        Optional<TimelineEvent> updated = service.update(id, form::applyTo);
         if (updated.isEmpty()) {
             redirect.addFlashAttribute("error", "見つかりませんでした");
         } else {

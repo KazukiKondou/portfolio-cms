@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * サイト設定（文言）の編集画面
@@ -45,10 +43,7 @@ public class AdminSettingsController {
 
     @PostMapping
     public String save(@ModelAttribute("form") SettingsForm form, RedirectAttributes redirect) {
-        Map<String, String> updates = form.getEntries().stream()
-                .collect(Collectors.toMap(SettingsForm.Entry::getKey, e ->
-                        e.getValue() == null ? "" : e.getValue()));
-        siteSettingService.updateAll(updates);
+        siteSettingService.updateAll(form.toUpdates());
         redirect.addFlashAttribute("message", "保存しました");
         return "redirect:/admin/settings";
     }

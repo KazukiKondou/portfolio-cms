@@ -1,7 +1,9 @@
 package com.kondo.portfolio.admin.form;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * /admin/settings のフォームバインディング用
@@ -16,6 +18,15 @@ public class SettingsForm {
 
     public void setEntries(List<Entry> entries) {
         this.entries = entries;
+    }
+
+    /** key→value の Map に変換する（保存時に SiteSettingService.updateAll に渡す用） */
+    public Map<String, String> toUpdates() {
+        Map<String, String> updates = new LinkedHashMap<>();
+        for (Entry e : entries) {
+            updates.put(e.getKey(), e.getValue() == null ? "" : e.getValue());
+        }
+        return updates;
     }
 
     public static class Entry {

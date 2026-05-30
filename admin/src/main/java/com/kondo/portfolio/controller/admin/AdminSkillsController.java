@@ -1,5 +1,6 @@
 package com.kondo.portfolio.controller.admin;
 
+import com.kondo.portfolio.admin.form.SkillForm;
 import com.kondo.portfolio.domain.Skill;
 import com.kondo.portfolio.service.SkillService;
 import org.springframework.stereotype.Controller;
@@ -34,11 +35,11 @@ public class AdminSkillsController {
 
     @GetMapping("/new")
     public String newForm(Model model) {
-        Skill s = new Skill();
-        s.setPublished(true);
-        s.setProficiency(2);
-        s.setSortOrder(0);
-        model.addAttribute("skill", s);
+        SkillForm form = new SkillForm();
+        form.setPublished(true);
+        form.setProficiency(2);
+        form.setSortOrder(0);
+        model.addAttribute("skill", form);
         model.addAttribute("isNew", true);
         return "admin/skills/form";
     }
@@ -46,7 +47,7 @@ public class AdminSkillsController {
     @GetMapping("/{id}/edit")
     public String editForm(@PathVariable Long id, Model model, RedirectAttributes redirect) {
         return service.findById(id).map(s -> {
-            model.addAttribute("skill", s);
+            model.addAttribute("skill", SkillForm.fromEntity(s));
             model.addAttribute("isNew", false);
             return "admin/skills/form";
         }).orElseGet(() -> {
@@ -56,21 +57,15 @@ public class AdminSkillsController {
     }
 
     @PostMapping
-    public String create(@ModelAttribute("skill") Skill skill, RedirectAttributes redirect) {
-        skill.setId(null);
-        service.save(skill);
+    public String create(@ModelAttribute("skill") SkillForm form, RedirectAttributes redirect) {
+        service.save(form.toEntity());
         redirect.addFlashAttribute("message", "作成しました");
         return "redirect:/admin/skills";
     }
 
     @PostMapping("/{id}")
-    public String update(@PathVariable Long id, @ModelAttribute("skill") Skill skill, RedirectAttributes redirect) {
-        Optional<Skill> updated = service.update(id, existing -> {
-            existing.setName(skill.getName());
-            existing.setProficiency(skill.getProficiency() == null ? 2 : skill.getProficiency());
-            existing.setSortOrder(skill.getSortOrder() == null ? 0 : skill.getSortOrder());
-            existing.setPublished(skill.getPublished() != null && skill.getPublished());
-        });
+    public String update(@PathVariable Long id, @ModelAttribute("skill") SkillForm form, RedirectAttributes redirect) {
+        Optional<Skill> updated = service.update(id, form::applyTo);
         if (updated.isEmpty()) {
             redirect.addFlashAttribute("error", "見つかりませんでした");
         } else {
