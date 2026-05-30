@@ -1,0 +1,29 @@
+name: デプロイ
+
+# main への push をトリガーに、自宅サーバー上の self-hosted runner が
+# 最新コードを取得して Docker を再ビルド・再起動する
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # 手動実行も可能にしておく
+
+# デプロイの多重実行を防ぐ（前のデプロイが終わるまで次は待機）
+concurrency:
+  group: deploy-portfolio-cms
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, linux]
+    steps:
+      - name: 最新コードを取得して再起動
+        run: |
+          set -euo pipefail
+          cd "${{ vars.DEPLOY_DIR }}"
+          # サーバー側のローカル変更は捨てて main に強制同期する
+          git fetch --prune origin
+          git reset --hard origin/main
+          # 再ビルドして起動（.env と h2_data ボリュームはそのまま）
+          docker compose up -d --build
+          # 古いイメージを掃除してディスクを節約
+          docker image prune -f
