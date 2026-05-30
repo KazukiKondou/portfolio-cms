@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Optional;
+
 /**
  * 作品一覧の管理画面（CRUD）
  */
@@ -62,7 +64,7 @@ public class AdminWorksController {
 
     @PostMapping("/{id}")
     public String update(@PathVariable Long id, @ModelAttribute("work") Work work, RedirectAttributes redirect) {
-        return service.findById(id).map(existing -> {
+        Optional<Work> updated = service.update(id, existing -> {
             existing.setTitle(work.getTitle());
             existing.setSummary(work.getSummary());
             existing.setDescription(work.getDescription());
@@ -70,13 +72,13 @@ public class AdminWorksController {
             existing.setTags(work.getTags());
             existing.setSortOrder(work.getSortOrder() == null ? 0 : work.getSortOrder());
             existing.setPublished(work.getPublished() != null && work.getPublished());
-            service.save(existing);
-            redirect.addFlashAttribute("message", "更新しました");
-            return "redirect:/admin/works";
-        }).orElseGet(() -> {
-            redirect.addFlashAttribute("error", "見つかりませんでした");
-            return "redirect:/admin/works";
         });
+        if (updated.isEmpty()) {
+            redirect.addFlashAttribute("error", "見つかりませんでした");
+        } else {
+            redirect.addFlashAttribute("message", "更新しました");
+        }
+        return "redirect:/admin/works";
     }
 
     @PostMapping("/{id}/delete")

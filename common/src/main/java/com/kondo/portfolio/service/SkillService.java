@@ -11,6 +11,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 @Service
@@ -80,6 +81,17 @@ public class SkillService {
         if (skill.getSortOrder() == null) skill.setSortOrder(0);
         if (skill.getProficiency() == null) skill.setProficiency(2);
         return repository.save(skill);
+    }
+
+    /**
+     * id で既存レコードを引いて applier で変更を当て、保存する。
+     */
+    @Transactional
+    public Optional<Skill> update(Long id, Consumer<Skill> applier) {
+        return repository.findById(id).map(existing -> {
+            applier.accept(existing);
+            return save(existing);
+        });
     }
 
     @Transactional

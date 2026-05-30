@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 @Service
 public class TimelineEventService {
@@ -43,6 +44,17 @@ public class TimelineEventService {
         if (event.getPublished() == null) event.setPublished(true);
         if (event.getSortOrder() == null) event.setSortOrder(0);
         return repository.save(event);
+    }
+
+    /**
+     * id で既存レコードを引いて applier で変更を当て、保存する。
+     */
+    @Transactional
+    public Optional<TimelineEvent> update(Long id, Consumer<TimelineEvent> applier) {
+        return repository.findById(id).map(existing -> {
+            applier.accept(existing);
+            return save(existing);
+        });
     }
 
     @Transactional

@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 @Service
 public class WorkService {
@@ -50,6 +51,18 @@ public class WorkService {
         if (work.getPublished() == null) work.setPublished(true);
         if (work.getSortOrder() == null) work.setSortOrder(0);
         return repository.save(work);
+    }
+
+    /**
+     * id で既存レコードを引いて applier で変更を当て、保存する。
+     * 見つからなければ Optional.empty()。
+     */
+    @Transactional
+    public Optional<Work> update(Long id, Consumer<Work> applier) {
+        return repository.findById(id).map(existing -> {
+            applier.accept(existing);
+            return save(existing);
+        });
     }
 
     @Transactional

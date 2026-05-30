@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Optional;
+
 /**
  * Timeline (略歴) の管理画面
  */
@@ -62,7 +64,7 @@ public class AdminTimelineController {
 
     @PostMapping("/{id}")
     public String update(@PathVariable Long id, @ModelAttribute("event") TimelineEvent event, RedirectAttributes redirect) {
-        return service.findById(id).map(existing -> {
+        Optional<TimelineEvent> updated = service.update(id, existing -> {
             existing.setYear(event.getYear());
             existing.setMonth(event.getMonth());
             existing.setTitle(event.getTitle());
@@ -70,13 +72,13 @@ public class AdminTimelineController {
             existing.setTags(event.getTags());
             existing.setSortOrder(event.getSortOrder() == null ? 0 : event.getSortOrder());
             existing.setPublished(event.getPublished() != null && event.getPublished());
-            service.save(existing);
-            redirect.addFlashAttribute("message", "更新しました");
-            return "redirect:/admin/timeline";
-        }).orElseGet(() -> {
-            redirect.addFlashAttribute("error", "見つかりませんでした");
-            return "redirect:/admin/timeline";
         });
+        if (updated.isEmpty()) {
+            redirect.addFlashAttribute("error", "見つかりませんでした");
+        } else {
+            redirect.addFlashAttribute("message", "更新しました");
+        }
+        return "redirect:/admin/timeline";
     }
 
     @PostMapping("/{id}/delete")

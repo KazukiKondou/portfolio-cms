@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Optional;
+
 /**
  * スキルの管理画面（CRUD）
  */
@@ -63,18 +65,18 @@ public class AdminSkillsController {
 
     @PostMapping("/{id}")
     public String update(@PathVariable Long id, @ModelAttribute("skill") Skill skill, RedirectAttributes redirect) {
-        return service.findById(id).map(existing -> {
+        Optional<Skill> updated = service.update(id, existing -> {
             existing.setName(skill.getName());
             existing.setProficiency(skill.getProficiency() == null ? 2 : skill.getProficiency());
             existing.setSortOrder(skill.getSortOrder() == null ? 0 : skill.getSortOrder());
             existing.setPublished(skill.getPublished() != null && skill.getPublished());
-            service.save(existing);
-            redirect.addFlashAttribute("message", "更新しました");
-            return "redirect:/admin/skills";
-        }).orElseGet(() -> {
-            redirect.addFlashAttribute("error", "見つかりませんでした");
-            return "redirect:/admin/skills";
         });
+        if (updated.isEmpty()) {
+            redirect.addFlashAttribute("error", "見つかりませんでした");
+        } else {
+            redirect.addFlashAttribute("message", "更新しました");
+        }
+        return "redirect:/admin/skills";
     }
 
     @PostMapping("/{id}/delete")
