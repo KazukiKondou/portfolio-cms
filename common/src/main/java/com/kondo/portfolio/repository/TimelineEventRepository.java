@@ -1,6 +1,6 @@
 package com.kondo.portfolio.repository;
 
-import com.kondo.portfolio.domain.TimelineEvent;
+import com.kondo.portfolio.entity.TimelineEvent;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

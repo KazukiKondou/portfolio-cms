@@ -1,10 +1,11 @@
 package com.kondo.portfolio.admin.form;
 
-import com.kondo.portfolio.domain.TimelineEvent;
+import com.kondo.portfolio.entity.TimelineEvent;
 
 /** /admin/timeline の新規作成・編集用フォーム */
 public class TimelineEventForm {
 
+    private Long id;
     private Integer year;
     private Integer month;
     private String title;
@@ -15,6 +16,7 @@ public class TimelineEventForm {
 
     public static TimelineEventForm fromEntity(TimelineEvent e) {
         TimelineEventForm f = new TimelineEventForm();
+        f.id = e.getId();
         f.year = e.getYear();
         f.month = e.getMonth();
         f.title = e.getTitle();
@@ -39,6 +41,14 @@ public class TimelineEventForm {
         TimelineEvent e = new TimelineEvent();
         applyTo(e);
         return e;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Integer getYear() {

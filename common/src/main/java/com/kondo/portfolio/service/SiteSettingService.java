@@ -1,6 +1,6 @@
 package com.kondo.portfolio.service;
 
-import com.kondo.portfolio.domain.SiteSetting;
+import com.kondo.portfolio.entity.SiteSetting;
 import com.kondo.portfolio.repository.SiteSettingRepository;
 import java.time.LocalDateTime;
 import java.util.List;

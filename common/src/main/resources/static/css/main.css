@@ -407,6 +407,7 @@ a:hover {
   color: var(--color-text-muted);
 }
 .form-row input[type="text"],
+.form-row input[type="email"],
 .form-row input[type="password"],
 .form-row input[type="number"],
 .form-row input[type="url"],

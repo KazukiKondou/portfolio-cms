@@ -1,6 +1,6 @@
 package com.kondo.portfolio.repository;
 
-import com.kondo.portfolio.domain.Work;
+import com.kondo.portfolio.entity.Work;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 

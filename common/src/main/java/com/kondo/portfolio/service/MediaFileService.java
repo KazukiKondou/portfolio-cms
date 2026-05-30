@@ -1,6 +1,6 @@
 package com.kondo.portfolio.service;
 
-import com.kondo.portfolio.domain.MediaFile;
+import com.kondo.portfolio.entity.MediaFile;
 import com.kondo.portfolio.repository.MediaFileRepository;
 import java.time.LocalDateTime;
 import java.util.Optional;

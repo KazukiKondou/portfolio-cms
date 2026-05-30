@@ -1,6 +1,6 @@
 package com.kondo.portfolio.repository;
 
-import com.kondo.portfolio.domain.ContactMessage;
+import com.kondo.portfolio.entity.ContactMessage;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -1,10 +1,11 @@
 package com.kondo.portfolio.admin.form;
 
-import com.kondo.portfolio.domain.Work;
+import com.kondo.portfolio.entity.Work;
 
 /** /admin/works の新規作成・編集用フォーム */
 public class WorkForm {
 
+    private Long id;
     private String title;
     private String summary;
     private String description;
@@ -15,6 +16,7 @@ public class WorkForm {
 
     public static WorkForm fromEntity(Work w) {
         WorkForm f = new WorkForm();
+        f.id = w.getId();
         f.title = w.getTitle();
         f.summary = w.getSummary();
         f.description = w.getDescription();
@@ -41,6 +43,14 @@ public class WorkForm {
         Work w = new Work();
         applyTo(w);
         return w;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {

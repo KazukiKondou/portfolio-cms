@@ -1,10 +1,11 @@
 package com.kondo.portfolio.admin.form;
 
-import com.kondo.portfolio.domain.Skill;
+import com.kondo.portfolio.entity.Skill;
 
 /** /admin/skills の新規作成・編集用フォーム */
 public class SkillForm {
 
+    private Long id;
     private String name;
     private Integer proficiency;
     private Integer sortOrder;
@@ -12,6 +13,7 @@ public class SkillForm {
 
     public static SkillForm fromEntity(Skill s) {
         SkillForm f = new SkillForm();
+        f.id = s.getId();
         f.name = s.getName();
         f.proficiency = s.getProficiency();
         f.sortOrder = s.getSortOrder();
@@ -30,6 +32,14 @@ public class SkillForm {
         Skill s = new Skill();
         applyTo(s);
         return s;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {

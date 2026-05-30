@@ -5,4 +5,4 @@ plugins {
 
 rootProject.name = 'portfolio-cms'
 
-include 'common', 'site', 'admin'
+include 'common', 'portfolio', 'admin'
