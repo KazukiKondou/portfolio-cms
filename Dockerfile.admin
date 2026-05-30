@@ -5,14 +5,14 @@ WORKDIR /workspace
 
 COPY settings.gradle build.gradle ./
 COPY common/build.gradle common/
-COPY site/build.gradle site/
+COPY portfolio/build.gradle portfolio/
 COPY admin/build.gradle admin/
 RUN gradle :admin:dependencies --no-daemon || true
 
 COPY common common
 COPY admin admin
-# site も settings.gradle で参照されるので空ディレクトリだけ用意する
-RUN mkdir -p site
+# portfolio も settings.gradle で参照されるので空ディレクトリだけ用意する
+RUN mkdir -p portfolio
 
 RUN gradle :admin:bootJar --no-daemon -x test
 

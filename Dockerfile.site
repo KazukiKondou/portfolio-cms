@@ -1,4 +1,4 @@
-# 公開サイト (:site) 用イメージ
+# 公開サイト (:portfolio) 用イメージ
 # ビルドステージ
 FROM gradle:8.14.4-jdk21 AS build
 WORKDIR /workspace
@@ -6,19 +6,19 @@ WORKDIR /workspace
 # 依存だけ先に拾ってレイヤキャッシュを効かせる
 COPY settings.gradle build.gradle ./
 COPY common/build.gradle common/
-COPY site/build.gradle site/
+COPY portfolio/build.gradle portfolio/
 COPY admin/build.gradle admin/
-RUN gradle :site:dependencies --no-daemon || true
+RUN gradle :portfolio:dependencies --no-daemon || true
 
 # ソースをコピーしてビルド
 COPY common common
-COPY site site
-RUN gradle :site:bootJar --no-daemon -x test
+COPY portfolio portfolio
+RUN gradle :portfolio:bootJar --no-daemon -x test
 
 # 実行ステージ
 FROM eclipse-temurin:21-jre
 WORKDIR /app
-COPY --from=build /workspace/site/build/libs/*-SNAPSHOT.jar app.jar
+COPY --from=build /workspace/portfolio/build/libs/*-SNAPSHOT.jar app.jar
 
 EXPOSE 8080
 ENV SPRING_PROFILES_ACTIVE=prod
