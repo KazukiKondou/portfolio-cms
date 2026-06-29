@@ -182,6 +182,23 @@ a:hover {
 .about-bio p:last-child {
   margin-bottom: 0;
 }
+.about-social {
+  margin-top: 24px;
+}
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-text);
+  text-decoration: none;
+  font-size: 15px;
+}
+.social-link:hover {
+  color: var(--color-accent);
+}
+.social-link-icon {
+  display: block;
+}
 .section-title {
   font-family: "Iowan Old Style", "Hoefler Text", Georgia, serif;
   font-size: 24px;
@@ -482,25 +499,6 @@ a:hover {
 }
 .contact .hint {
   margin-bottom: 32px;
-}
-.contact-links {
-  margin-top: 32px;
-  padding-top: 24px;
-  border-top: 1px solid var(--color-border);
-}
-.contact-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--color-text);
-  text-decoration: none;
-  font-size: 15px;
-}
-.contact-link:hover {
-  color: var(--color-accent);
-}
-.contact-link-icon {
-  display: block;
 }
 
 /* ダッシュボード */
