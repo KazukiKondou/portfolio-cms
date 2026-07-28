@@ -1,6 +1,26 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 
+<head>
+
+  <!-- 検索結果や SNS 共有時の見え方をそろえる。ページの表示内容そのものは変えない -->
+  <th:block th:fragment="meta(pageTitle, description, path)">
+    <meta name="description" th:content="${description}">
+    <link rel="canonical" th:href="${baseUrl + path}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" th:content="${settings['site.title']}">
+    <meta property="og:title" th:content="${pageTitle}">
+    <meta property="og:description" th:content="${description}">
+    <meta property="og:url" th:content="${baseUrl + path}">
+    <meta property="og:locale" content="ja_JP">
+    <meta property="og:image"
+          th:if="${!#strings.isEmpty(settings['hero.photoUrl']) and #strings.startsWith(settings['hero.photoUrl'], '/')}"
+          th:content="${baseUrl + settings['hero.photoUrl']}">
+    <meta name="twitter:card" content="summary">
+  </th:block>
+
+</head>
+
 <body>
 
   <header th:fragment="header" class="site-header">

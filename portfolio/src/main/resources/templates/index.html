@@ -5,7 +5,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title th:text="|${settings['site.title']} — Portfolio|">Kondo — Portfolio</title>
+  <th:block th:replace="~{fragments/site :: meta(
+      ${settings['site.title'] + ' — Portfolio'},
+      ${seo.summarize(settings['hero.intro'], 120)},
+      '/')}"></th:block>
   <link rel="stylesheet" th:href="@{/css/main.css}">
+
+  <!-- 検索エンジンに「誰のサイトか」を伝える構造化データ -->
+  <script type="application/ld+json" th:inline="javascript">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": [[${settings['site.title']}]],
+      "jobTitle": [[${settings['hero.tagline']}]],
+      "description": [[${settings['hero.intro']}]],
+      "url": [[${baseUrl}]]
+    }
+  </script>
 </head>
 
 <body>
@@ -25,7 +41,8 @@
         </div>
         <div class="hero-photo">
           <img th:if="${!#strings.isEmpty(settings['hero.photoUrl'])}"
-               th:src="${settings['hero.photoUrl']}" alt="" class="hero-photo-img">
+               th:src="${settings['hero.photoUrl']}" th:alt="${settings['site.title']}"
+               class="hero-photo-img" width="240" height="240" loading="lazy">
         </div>
       </div>
     </section>

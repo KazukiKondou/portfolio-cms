@@ -5,6 +5,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title th:text="|Contact — ${settings['site.title']}|">Contact — Kondo</title>
+  <th:block th:replace="~{fragments/site :: meta(
+      ${'Contact — ' + settings['site.title']},
+      ${settings['site.title'] + ' へのお問い合わせはこちらのフォームからどうぞ。'},
+      '/contact')}"></th:block>
   <link rel="stylesheet" th:href="@{/css/main.css}">
 </head>
 

@@ -5,6 +5,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title th:text="|About — ${settings['site.title']}|">About — Kondo</title>
+  <th:block th:replace="~{fragments/site :: meta(
+      ${'About — ' + settings['site.title']},
+      ${seo.summarize(settings['about.bio'], 120)},
+      '/about')}"></th:block>
   <link rel="stylesheet" th:href="@{/css/main.css}">
 </head>
 

@@ -40,6 +40,10 @@ server:
   port: 8080
 
 portfolio:
+  site:
+    # canonical / og:url / sitemap.xml で使う公開URL
+    base-url: ${SITE_BASE_URL:https://kazukikondo.com}
+
   notification:
     discord:
       # お問い合わせ受信を飛ばす Discord の Webhook URL。未設定なら通知しない

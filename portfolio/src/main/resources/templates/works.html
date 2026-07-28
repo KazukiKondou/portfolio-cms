@@ -5,6 +5,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title th:text="|Works — ${settings['site.title']}|">Works — Kondo</title>
+  <th:block th:replace="~{fragments/site :: meta(
+      ${'Works — ' + settings['site.title']},
+      ${settings['site.title'] + ' がこれまでに作ってきたプロダクトの一覧です。'},
+      '/works')}"></th:block>
   <link rel="stylesheet" th:href="@{/css/main.css}">
 </head>
 
