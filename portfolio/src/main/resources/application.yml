@@ -30,5 +30,19 @@ spring:
   thymeleaf:
     cache: false
 
+  # 外部への HTTP 呼び出し (Discord Webhook) がいつまでも待たないようにする
+  http:
+    client:
+      connect-timeout: 3s
+      read-timeout: 5s
+
 server:
   port: 8080
+
+portfolio:
+  notification:
+    discord:
+      # お問い合わせ受信を飛ばす Discord の Webhook URL。未設定なら通知しない
+      webhook-url: ${DISCORD_WEBHOOK_URL:}
+      # 通知カードのタイトルからリンクする管理画面の URL (任意)
+      admin-url: ${PORTFOLIO_ADMIN_URL:}

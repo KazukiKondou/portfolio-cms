@@ -23,6 +23,9 @@ services:
       DATABASE_URL: jdbc:h2:tcp://h2:9092//data/portfolio;DB_CLOSE_DELAY=-1
       DATABASE_USER: sa
       DATABASE_PASSWORD: ""
+      # お問い合わせを Discord に通知する。未設定なら通知は動かない
+      DISCORD_WEBHOOK_URL: ${DISCORD_WEBHOOK_URL:-}
+      PORTFOLIO_ADMIN_URL: ${PORTFOLIO_ADMIN_URL:-}
     depends_on:
       - h2
     restart: unless-stopped

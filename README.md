@@ -118,3 +118,21 @@ ADMIN_BIND=100.x.y.z
 ```
 
 これで Cloudflare Tunnel には載せず、Tailscale ネットワーク内のデバイスだけが `http://100.x.y.z:8081/admin` でアクセスできる。
+
+### お問い合わせの Discord 通知
+
+`/contact` にメッセージが届いたら Discord に投げる。管理画面を開かなくても気付けるようにするため。
+
+1. Discord で通知したいチャンネルの「チャンネルの編集 > 連携サービス > ウェブフック」から Webhook を作り、URL をコピーする
+2. `.env` に貼る
+
+```bash
+DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/xxxxx/yyyyy
+# 通知カードのタイトルから管理画面に飛べるようにする（任意）
+PORTFOLIO_ADMIN_URL=http://100.x.y.z:8081/admin/messages
+```
+
+3. `docker compose up -d` で `site` を入れ替える
+
+`DISCORD_WEBHOOK_URL` が空なら通知はしない（保存だけして管理画面で見る従来どおりの動き）。
+送信はフォームの応答とは別スレッドで行うので、Discord 側が落ちていてもお問い合わせの保存は成功する（ログにだけ残る）。
