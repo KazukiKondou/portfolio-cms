@@ -21,6 +21,8 @@ html, body, h1, h2, h3, h4, p, ul, ol, figure {
 /* ベース */
 html {
   font-size: 16px;
+  /* ページ内スクロール（検索やキーボード移動）でヘッダーに隠れないようにする */
+  scroll-padding-top: 80px;
 }
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue",
@@ -64,8 +66,11 @@ a:hover {
   padding: 0 24px;
 }
 
-/* ヘッダー（藍色） */
+/* ヘッダー（藍色）。スクロールしても画面上部に残す */
 .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
   padding: 22px 0;
   background: var(--color-accent);
   color: #fff;
