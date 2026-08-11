@@ -1,5 +1,6 @@
 package com.kondo.portfolio.site.controller;
 
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
@@ -7,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import com.kondo.portfolio.entity.Work;
+import com.kondo.portfolio.site.service.PageViewService;
 import com.kondo.portfolio.site.service.WorkService;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,12 +24,13 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 class WorksControllerTest {
 
     @Mock private WorkService workService;
+    @Mock private PageViewService pageViewService;
     private MockMvc mockMvc;
 
     @BeforeEach
     void setUp() {
         mockMvc =
-                MockMvcBuilders.standaloneSetup(new WorksController(workService))
+                MockMvcBuilders.standaloneSetup(new WorksController(workService, pageViewService))
                         .setViewResolvers(
                                 new InternalResourceViewResolver("/WEB-INF/views/", ".jsp"))
                         .build();
@@ -42,5 +45,12 @@ class WorksControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("works"))
                 .andExpect(model().attribute("works", List.of(w)));
+    }
+
+    @Test
+    void works表示で閲覧数を加算する() throws Exception {
+        mockMvc.perform(get("/works")).andExpect(status().isOk());
+
+        verify(pageViewService).recordView("/works");
     }
 }

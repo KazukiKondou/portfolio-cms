@@ -1,5 +1,6 @@
 package com.kondo.portfolio.site.controller;
 
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
@@ -8,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.kondo.portfolio.entity.TimelineEvent;
 import com.kondo.portfolio.site.service.AboutService;
+import com.kondo.portfolio.site.service.PageViewService;
 import com.kondo.portfolio.site.service.ProficiencyGroup;
 import com.kondo.portfolio.site.service.SkillService;
 import com.kondo.portfolio.site.service.TimelineEventService;
@@ -28,13 +30,18 @@ class AboutControllerTest {
     @Mock private AboutService aboutService;
     @Mock private SkillService skillService;
     @Mock private TimelineEventService timelineService;
+    @Mock private PageViewService pageViewService;
     private MockMvc mockMvc;
 
     @BeforeEach
     void setUp() {
         mockMvc =
                 MockMvcBuilders.standaloneSetup(
-                                new AboutController(aboutService, skillService, timelineService))
+                                new AboutController(
+                                        aboutService,
+                                        skillService,
+                                        timelineService,
+                                        pageViewService))
                         .setViewResolvers(
                                 new InternalResourceViewResolver("/WEB-INF/views/", ".jsp"))
                         .build();
@@ -54,5 +61,12 @@ class AboutControllerTest {
                 .andExpect(model().attribute("aboutBioParagraphs", List.of("自己紹介")))
                 .andExpect(model().attribute("proficiencyGroups", List.of(group)))
                 .andExpect(model().attribute("timelineEvents", List.of(ev)));
+    }
+
+    @Test
+    void about表示で閲覧数を加算する() throws Exception {
+        mockMvc.perform(get("/about").flashAttr("settings", Map.of())).andExpect(status().isOk());
+
+        verify(pageViewService).recordView("/about");
     }
 }

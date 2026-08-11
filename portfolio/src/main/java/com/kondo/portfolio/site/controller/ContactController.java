@@ -2,6 +2,7 @@ package com.kondo.portfolio.site.controller;
 
 import com.kondo.portfolio.site.form.ContactForm;
 import com.kondo.portfolio.site.service.ContactMessageService;
+import com.kondo.portfolio.site.service.PageViewService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,17 +15,23 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /** 公開サイトのお問い合わせフォーム */
 @Controller
-@RequestMapping("/contact")
+@RequestMapping(ContactController.PAGE_PATH)
 public class ContactController {
 
-    private final ContactMessageService service;
+    static final String PAGE_PATH = "/contact";
 
-    public ContactController(ContactMessageService service) {
+    private final ContactMessageService service;
+    private final PageViewService pageViewService;
+
+    public ContactController(ContactMessageService service, PageViewService pageViewService) {
         this.service = service;
+        this.pageViewService = pageViewService;
     }
 
     @GetMapping
     public String form(Model model) {
+        // 数えるのは表示のときだけ。送信(POST)後のリダイレクト先GETは1回として数える
+        pageViewService.recordView(PAGE_PATH);
         if (!model.containsAttribute("contactForm")) {
             model.addAttribute("contactForm", new ContactForm());
         }

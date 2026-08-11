@@ -1,6 +1,7 @@
 package com.kondo.portfolio.site.controller;
 
 import com.kondo.portfolio.site.service.AboutService;
+import com.kondo.portfolio.site.service.PageViewService;
 import com.kondo.portfolio.site.service.SkillService;
 import com.kondo.portfolio.site.service.TimelineEventService;
 import java.util.Map;
@@ -13,21 +14,27 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 @Controller
 public class AboutController {
 
+    private static final String PAGE_PATH = "/about";
+
     private final AboutService aboutService;
     private final SkillService skillService;
     private final TimelineEventService timelineService;
+    private final PageViewService pageViewService;
 
     public AboutController(
             AboutService aboutService,
             SkillService skillService,
-            TimelineEventService timelineService) {
+            TimelineEventService timelineService,
+            PageViewService pageViewService) {
         this.aboutService = aboutService;
         this.skillService = skillService;
         this.timelineService = timelineService;
+        this.pageViewService = pageViewService;
     }
 
-    @GetMapping("/about")
+    @GetMapping(PAGE_PATH)
     public String index(@ModelAttribute("settings") Map<String, String> settings, Model model) {
+        pageViewService.recordView(PAGE_PATH);
         String bio = settings.getOrDefault("about.bio", "");
         model.addAttribute("aboutBioParagraphs", aboutService.splitBioParagraphs(bio));
         model.addAttribute("proficiencyGroups", skillService.findGroupedByProficiency());

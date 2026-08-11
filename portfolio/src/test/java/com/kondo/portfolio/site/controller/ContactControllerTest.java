@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import com.kondo.portfolio.site.service.ContactMessageService;
+import com.kondo.portfolio.site.service.PageViewService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,12 +25,13 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 class ContactControllerTest {
 
     @Mock private ContactMessageService service;
+    @Mock private PageViewService pageViewService;
     private MockMvc mockMvc;
 
     @BeforeEach
     void setUp() {
         mockMvc =
-                MockMvcBuilders.standaloneSetup(new ContactController(service))
+                MockMvcBuilders.standaloneSetup(new ContactController(service, pageViewService))
                         .setViewResolvers(
                                 new InternalResourceViewResolver("/WEB-INF/views/", ".jsp"))
                         .build();
@@ -41,6 +43,8 @@ class ContactControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("contact"))
                 .andExpect(model().attributeExists("contactForm"));
+
+        verify(pageViewService).recordView("/contact");
     }
 
     @Test
@@ -54,6 +58,8 @@ class ContactControllerTest {
                 .andExpect(redirectedUrl("/contact"));
 
         verify(service).receive("太郎", "t@example.com", "本文");
+        // 送信そのものは閲覧数に数えない
+        verify(pageViewService, never()).recordView(Mockito.anyString());
     }
 
     @Test

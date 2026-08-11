@@ -28,6 +28,28 @@
           <li><a href="/admin/timeline">Timeline (略歴)</a></li>
           <li><a href="/admin/messages">お問い合わせ</a></li>
         </ul>
+
+        <h2 class="section-title">アクセス数</h2>
+        <p class="welcome">
+          公開サイトの表示回数。合計 <strong th:text="${totalViews}">0</strong> 回。
+        </p>
+
+        <p th:if="${pageViews.empty}" class="hint">まだ記録がありません。</p>
+
+        <ul class="admin-list" th:unless="${pageViews.empty}">
+          <li class="admin-list-item" th:each="pv : ${pageViews}">
+            <div>
+              <span class="item-title" th:text="${pv.pagePath}">/</span>
+              <p class="item-meta">
+                最終アクセス
+                <span th:text="${#temporals.format(pv.updatedAt, 'yyyy-MM-dd HH:mm')}">日時</span>
+              </p>
+            </div>
+            <div class="item-actions">
+              <span th:text="${pv.viewCount} + ' 回'">0 回</span>
+            </div>
+          </li>
+        </ul>
       </div>
     </section>
   </main>
