@@ -137,20 +137,17 @@ PORTFOLIO_ADMIN_URL=http://100.x.y.z:8081/admin/messages
 `DISCORD_WEBHOOK_URL` が空なら通知はしない（保存だけして管理画面で見る従来どおりの動き）。
 送信はフォームの応答とは別スレッドで行うので、Discord 側が落ちていてもお問い合わせの保存は成功する（ログにだけ残る）。
 
-### 自動デプロイ (self-hosted runner)
+### デプロイ（手動）
 
-`main` に push すると `.github/workflows/deploy.yml` のジョブが自宅サーバーの runner で走り、
-`git reset --hard origin/main` してから `docker compose up -d --build` する。
-
-runner は systemd のユーザーサービスとして常駐させている（`nohup` 起動だとセッション終了で落ちて
-デプロイが黙って止まるため）。ユニットは `~/.config/systemd/user/github-runner.service`。
+自宅サーバーに SSH で入り、main を取り込んで作り直す。
 
 ```bash
-# 状態確認 / 再起動 / ログ
-systemctl --user status github-runner
-systemctl --user restart github-runner
-journalctl --user -u github-runner -f
+ssh kondo-home-server
+cd ~/portfolio-cms
+git fetch --prune origin && git reset --hard origin/main
+docker compose up -d --build && docker image prune -f
 ```
 
-サーバー再起動後も自動で上がるように `loginctl enable-linger kondo` 済み。
-デプロイされていないと感じたら、まず `systemctl --user status github-runner` を見る。
+以前は GitHub Actions のセルフホスト runner で自動デプロイしていたが、2026-11 にやめた。
+公開リポジトリにセルフホスト runner を付けると、他人が送った PR のコードが
+自宅サーバー（docker グループ＝root 相当の権限）で動くおそれがあるため。
