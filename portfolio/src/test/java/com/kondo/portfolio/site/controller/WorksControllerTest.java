@@ -10,7 +10,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.kondo.portfolio.entity.Work;
 import com.kondo.portfolio.site.service.PageViewService;
 import com.kondo.portfolio.site.service.WorkService;
-import com.kondo.portfolio.site.shop.ShopCatalog;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,14 +25,12 @@ class WorksControllerTest {
 
     @Mock private WorkService workService;
     @Mock private PageViewService pageViewService;
-    private final ShopCatalog catalog = new ShopCatalog();
     private MockMvc mockMvc;
 
     @BeforeEach
     void setUp() {
         mockMvc =
-                MockMvcBuilders.standaloneSetup(
-                                new WorksController(workService, catalog, pageViewService))
+                MockMvcBuilders.standaloneSetup(new WorksController(workService, pageViewService))
                         .setViewResolvers(
                                 new InternalResourceViewResolver("/WEB-INF/views/", ".jsp"))
                         .build();
@@ -48,16 +45,6 @@ class WorksControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("works"))
                 .andExpect(model().attribute("works", List.of(w)));
-    }
-
-    @Test
-    void worksビューにメルカリ販売の商品と役割とショップ情報を渡す() throws Exception {
-        mockMvc.perform(get("/works"))
-                .andExpect(status().isOk())
-                .andExpect(model().attribute("shopItems", catalog.items()))
-                .andExpect(model().attribute("myRoles", catalog.myRoles()))
-                .andExpect(model().attribute("shopName", catalog.shopName()))
-                .andExpect(model().attribute("mercariUrl", catalog.mercariUrl()));
     }
 
     @Test
