@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class SeoController {
 
     /** サイトマップに載せる公開ページ */
-    private static final List<String> PUBLIC_PATHS = List.of("/", "/works", "/about", "/contact");
+    private static final List<String> PUBLIC_PATHS =
+            List.of("/", "/works", "/shop", "/about", "/contact");
 
     private final String baseUrl;
 

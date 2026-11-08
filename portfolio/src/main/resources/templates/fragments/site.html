@@ -29,6 +29,7 @@
       <nav class="site-nav">
         <a href="/" th:text="${settings['nav.home']}">Home</a>
         <a href="/works" th:text="${settings['nav.works']}">Works</a>
+        <a href="/shop" th:text="${settings['nav.shop'] ?: 'Shop'}">Shop</a>
         <a href="/about" th:text="${settings['nav.about']}">About</a>
         <a href="/contact" th:text="${settings['nav.contact']}">Contact</a>
       </nav>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title th:text="|Shop — ${settings['site.title']}|">Shop — Kondo</title>
+  <th:block th:replace="~{fragments/site :: meta(
+      ${'Shop — ' + settings['site.title']},
+      ${'3人のチームで運営するメルカリの3Dプリント品ショップ「' + shopName + '」。建築模型の添景を自作のデータから作って販売しています。'},
+      '/shop')}"></th:block>
+  <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+
+<body>
+
+  <header th:replace="~{fragments/site :: header}"></header>
+
+  <main>
+    <section class="shop">
+      <div class="container">
+        <h1 class="page-title">Shop</h1>
+
+        <p class="shop-name" th:text="${shopName}">こんどぅ工房｜3Dプリント</p>
+        <div class="shop-intro">
+          <p>3人のチームで、メルカリで3Dプリント品を売っています（2026年10月から）。
+            建築学生や模型を作る人に向けて、1/100・1/50 の家具や車などの「添景」を作っています。</p>
+          <p>扱うのは、自分たちで設計したデータか、作者が販売を認めたデータ（CC0・CC BY など）だけです。
+            形は寸法から Python で生成し、個数や縮尺を変えた別のセットもすぐ作れるようにしています。</p>
+        </div>
+        <p class="shop-link">
+          <a th:href="${mercariUrl}" target="_blank" rel="noopener">メルカリのショップを見る</a>
+        </p>
+
+        <h2 class="section-title">自分の役割</h2>
+        <ul class="shop-roles">
+          <li class="shop-role" th:each="role : ${myRoles}">
+            <h3 class="shop-role-name" th:text="${role.name}">企画・調査</h3>
+            <p class="shop-role-detail" th:text="${role.detail}">説明</p>
+          </li>
+        </ul>
+
+        <h2 class="section-title">商品</h2>
+        <p class="shop-note">価格は出品したときのもの（送料込み）です。</p>
+        <ul class="shop-items">
+          <li class="shop-item" th:each="item : ${shopItems}">
+            <img class="shop-item-img" th:src="${item.imagePath}" th:alt="|${item.scale} ${item.title}|"
+                 width="720" height="720" loading="lazy">
+            <div class="shop-item-body">
+              <p class="shop-item-meta">
+                <span th:text="${item.scale}">1/100</span>
+                <span class="shop-item-sold" th:if="${item.hasSold}">販売実績あり</span>
+              </p>
+              <h3 class="shop-item-title" th:text="${item.title}">椅子100脚・机25台セット</h3>
+              <p class="shop-item-contents" th:text="${item.contents}">内容</p>
+              <p class="shop-item-price" th:text="${item.priceLabel()}">¥999</p>
+              <p class="shop-item-note" th:text="${item.note}">工夫</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer th:replace="~{fragments/site :: footer}"></footer>
+
+</body>
+
+</html>
