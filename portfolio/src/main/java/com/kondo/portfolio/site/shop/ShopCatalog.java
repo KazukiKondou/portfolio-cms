@@ -4,7 +4,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 /**
- * /shop に載せるメルカリ販売の中身
+ * /works に載せるメルカリ販売の中身
  *
  * <p>商品の入れ替えは月に数回なので、CMS のテーブルは作らずコードで持つ。
  */

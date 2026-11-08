@@ -25,7 +25,7 @@ class SeoControllerTest {
         assertThat(xml).contains("<loc>https://example.test/works</loc>");
         assertThat(xml).contains("<loc>https://example.test/about</loc>");
         assertThat(xml).contains("<loc>https://example.test/contact</loc>");
-        assertThat(xml).contains("<loc>https://example.test/shop</loc>");
+        assertThat(xml).doesNotContain("/shop");
         assertThat(xml).endsWith("</urlset>\n");
     }
 

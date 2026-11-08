@@ -382,14 +382,20 @@ a:hover {
   max-width: 64ch;
 }
 
-/* Shop ページ（メルカリ販売） */
+/* Works ページ内のメルカリ販売 */
 .shop {
-  padding: 72px 0 96px;
+  margin-top: 72px;
 }
-.shop-name {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 16px;
+.shop-title {
+  margin-top: 0;
+  margin-bottom: 4px;
+}
+.shop .works-tags {
+  margin-bottom: 20px;
+}
+.shop-heading {
+  font-size: 16px;
+  margin: 40px 0 16px;
 }
 .shop-intro p {
   margin-bottom: 1em;
